@@ -1,0 +1,11 @@
+.container{
+    margin-top: 5rem;
+    margin-left: 1rem;
+  }
+
+.components{
+    display: grid;
+    grid-gap: 16px;
+    padding: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(23%, 1fr));
+}

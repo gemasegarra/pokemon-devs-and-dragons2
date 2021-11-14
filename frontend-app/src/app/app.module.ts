@@ -8,6 +8,10 @@ import { TrainersComponent } from './components/trainers/trainers.component';
 import { TrainerItemComponent } from './components/trainer-item/trainer-item.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PokemonDetailComponent } from './components/pokemon-detail/pokemon-detail.component';
+import { PokemonListComponent } from './components/pokemon-list/pokemon-list.component';
+import { PokedexComponent } from './pokedex/pokedex.component';
+import { NgxPaginationModule, PaginatePipe } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -15,14 +19,18 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     TrainersComponent,
     TrainerItemComponent,
     NavBarComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PokemonDetailComponent,
+    PokemonListComponent,
+    PokedexComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
