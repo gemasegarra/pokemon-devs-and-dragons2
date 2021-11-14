@@ -1,0 +1,82 @@
+/* inside connection with root user
+DROP USER 'ironhacker'@'localhost';
+CREATE USER 'ironhacker'@'localhost' IDENTIFIED BY 'Ir0nh4ck3r!';
+GRANT ALL PRIVILEGES ON pokemon.* TO 'ironhacker'@'localhost';
+GRANT ALL PRIVILEGES ON pokemon_test.* TO 'ironhacker'@'localhost';
+*/
+DROP SCHEMA IF EXISTS pokemon;
+CREATE SCHEMA pokemon;
+USE pokemon;
+
+DROP TABLE IF EXISTS trainer;
+
+CREATE TABLE trainer(
+	name VARCHAR(255) NOT NULL,
+	age TINYINT UNSIGNED,
+	hobby VARCHAR(255),
+    photo VARCHAR(255),
+    creation_date DATE,
+    modification_date DATE,
+    user_creation VARCHAR(255),
+    user_modification VARCHAR(255),
+	PRIMARY KEY(name)
+);
+
+DROP TABLE IF EXISTS team;
+
+CREATE TABLE team(
+	id INT NOT NULL AUTO_INCREMENT,
+	trainer_name VARCHAR(255),
+    creation_date DATE,
+    modification_date DATE,
+    user_creation VARCHAR(255),
+    user_modification VARCHAR(255),
+	PRIMARY KEY(id),
+    FOREIGN KEY(trainer_name) REFERENCES trainer(name)
+);
+
+DROP TABLE IF EXISTS pokemon;
+
+CREATE TABLE pokemon(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	team_id INT,
+	name VARCHAR(255),
+    image_url VARCHAR(255),
+    weight INT,
+    creation_date DATE,
+    modification_date DATE,
+    user_creation VARCHAR(255),
+    user_modification VARCHAR(255),
+	PRIMARY KEY(id),
+    FOREIGN KEY(team_id) REFERENCES team(id)
+);
+
+DROP TABLE IF EXISTS pokemon_type;
+
+CREATE TABLE pokemon_type(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	pokemon_id INT UNSIGNED,
+	name VARCHAR(255),
+    creation_date DATE,
+    modification_date DATE,
+    user_creation VARCHAR(255),
+    user_modification VARCHAR(255),
+	PRIMARY KEY(id),
+    FOREIGN KEY(pokemon_id) REFERENCES pokemon(id)
+);
+
+DROP TABLE IF EXISTS pokemon_stats;
+
+CREATE TABLE pokemon_stats(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	pokemon_id INT UNSIGNED,
+	name VARCHAR(255),
+    value SMALLINT,
+    creation_date DATE,
+    modification_date DATE,
+    user_creation VARCHAR(255),
+    user_modification VARCHAR(255),
+	PRIMARY KEY(id),
+    FOREIGN KEY(pokemon_id) REFERENCES pokemon(id)
+);
+
