@@ -53,40 +53,20 @@ public class PokemonEntity {
         this.imageUrl = imageUrl;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public LocalDate getModificationDate() {
-        return modificationDate;
     }
 
     public void setModificationDate(LocalDate modificationDate) {
         this.modificationDate = modificationDate;
     }
 
-    public String getUserCreation() {
-        return userCreation;
-    }
-
     public void setUserCreation(String userCreation) {
         this.userCreation = userCreation;
     }
 
-    public String getUserModification() {
-        return userModification;
-    }
-
     public void setUserModification(String userModification) {
         this.userModification = userModification;
-    }
-
-    public TrainerEntity getTrainer() {
-        return trainer;
     }
 
     public void setTrainer(TrainerEntity trainer) {
@@ -97,15 +77,8 @@ public class PokemonEntity {
         return pokemonTypeList;
     }
 
-    public void setPokemonTypeList(List<PokemonTypeEntity> pokemonTypeList) {
-        this.pokemonTypeList = pokemonTypeList;
-    }
-
     public List<PokemonStatsEntity> getPokemonStatsList() {
         return pokemonStatsList;
     }
 
-    public void setPokemonStatsList(List<PokemonStatsEntity> pokemonStatsList) {
-        this.pokemonStatsList = pokemonStatsList;
-    }
 }

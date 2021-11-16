@@ -1,6 +1,8 @@
 package com.ironhack.teamservice.controller.implementations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ironhack.teamservice.controller.dto.PokemonDTO;
+import com.ironhack.teamservice.controller.dto.PokemonStatsDTO;
 import com.ironhack.teamservice.model.PokemonEntity;
 import com.ironhack.teamservice.model.PokemonStatsEntity;
 import com.ironhack.teamservice.model.PokemonTypeEntity;
@@ -20,11 +22,15 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -50,6 +56,7 @@ class TeamControllerImplTest {
 
     private TrainerEntity trainer;
     private PokemonEntity pokemon;
+    private PokemonDTO pokemonDTO;
 
     @BeforeEach
     void setUp() {
@@ -153,10 +160,95 @@ class TeamControllerImplTest {
     }
 
     @Test
-    void store() {
+    void store_UnprocessedEntity_InvalidBody() throws Exception {
+
+        pokemonDTO = new PokemonDTO();
+        pokemonDTO.setName("");
+        pokemonDTO.setImageUrl("");
+        String body = objectMapper.writeValueAsString(pokemonDTO);
+        mockMvc.perform(post("/pokemons/"+trainer.getName())
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                )
+                .andExpect(status().isUnprocessableEntity());
+
+        pokemonDTO = new PokemonDTO();
+        pokemonDTO.setName("test");
+        pokemonDTO.setImageUrl("test");
+        pokemonDTO.setTypeList(new ArrayList<>());
+        pokemonDTO.setStatsList(new ArrayList<>());
+        body = objectMapper.writeValueAsString(pokemonDTO);
+        mockMvc.perform(post("/pokemons/"+trainer.getName())
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                )
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
-    void delete() {
+    void store_UnprocessedEntity_TrainerNotExitsInDatabase() throws Exception {
+
+        pokemonDTO = new PokemonDTO();
+        pokemonDTO.setName("test");
+        pokemonDTO.setImageUrl("test");
+        pokemonDTO.setTypeList(List.of("grass"));
+        PokemonStatsDTO pokemonStatsDTO = new PokemonStatsDTO();
+        pokemonStatsDTO.setName("hp");
+        pokemonStatsDTO.setValue((short) 33);
+        pokemonDTO.setStatsList(List.of(pokemonStatsDTO));
+        String body = objectMapper.writeValueAsString(pokemonDTO);
+        mockMvc.perform(post("/pokemons/InventedTrainer")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                )
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void store_IsCreated_ValidBody() throws Exception {
+
+        pokemonDTO = new PokemonDTO();
+        pokemonDTO.setName("bulbasaur");
+        pokemonDTO.setImageUrl("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png");
+        pokemonDTO.setTypeList(List.of("grass","poison"));
+        PokemonStatsDTO pokemonStatsDTO = new PokemonStatsDTO();
+        pokemonStatsDTO.setName("hp");
+        pokemonStatsDTO.setValue((short) 33);
+        PokemonStatsDTO pokemonStatsDTO2 = new PokemonStatsDTO();
+        pokemonStatsDTO2.setName("attack");
+        pokemonStatsDTO2.setValue((short) 44);
+        pokemonDTO.setStatsList(List.of(pokemonStatsDTO, pokemonStatsDTO2));
+        String body = objectMapper.writeValueAsString(pokemonDTO);
+        MvcResult mvcResult = mockMvc.perform(post("/pokemons/"+trainer.getName())
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                )
+                .andExpect(status().isCreated())
+                .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8).contains("bulbasaur"));
+        assertEquals(pokemonDTO.getName(), trainerRepository.findById(trainer.getName()).get().getPokemonList().get(0).getName());
+    }
+
+    @Test
+    void delete_NotFound_PokemonNotExitsInDatabase() throws Exception {
+
+        mockMvc.perform(delete("/pokemons/0")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void delete_NoContent_PokemonExitsInDatabase() throws Exception {
+
+        mockMvc.perform(delete("/pokemons/"+pokemon.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNoContent());
+        assertEquals(Optional.empty(), pokemonRepository.findById(pokemon.getId()));
     }
 }

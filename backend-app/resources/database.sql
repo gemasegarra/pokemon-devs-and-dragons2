@@ -22,6 +22,9 @@ CREATE TABLE trainer(
 	PRIMARY KEY(name)
 );
 
+INSERT INTO trainer(name, age, hobby, photo, creation_date , modification_date , user_creation, user_modification)
+VALUES ("JhonDoe", 22, "Pokemon Hunter" , "https://pokemon.fandom.com/es/wiki/Haunter?file=Haunter.png" , '2021-11-16', '0001-01-01', "Initial query" , "");
+
 DROP TABLE IF EXISTS pokemon;
 
 CREATE TABLE pokemon(

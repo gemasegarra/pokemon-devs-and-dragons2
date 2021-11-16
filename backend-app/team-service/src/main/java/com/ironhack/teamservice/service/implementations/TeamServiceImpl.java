@@ -16,9 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -75,12 +77,80 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public void store(String name, PokemonDTO pokemonDTO) {
+    public PokemonDTO store(String name, PokemonDTO pokemonDTO) {
 
+        if ((pokemonDTO.getName().equals("")) || (pokemonDTO.getImageUrl().equals("")) ||
+                (pokemonDTO.getTypeList().isEmpty()) || (pokemonDTO.getStatsList().isEmpty())) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Body not able to process");
+        }
+
+        Optional<TrainerEntity> optionalTrainer = trainerRepository.findById(name);
+        if (!optionalTrainer.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Trainer does not exits");
+        }
+
+        PokemonEntity pokemonEntity = new PokemonEntity();
+        PokemonDTO outputPokemonDTO = new PokemonDTO();
+
+        pokemonEntity.setName(pokemonDTO.getName());
+        pokemonEntity.setImageUrl(pokemonDTO.getImageUrl());
+        pokemonEntity.setTrainer(optionalTrainer.get());
+        pokemonEntity.setCreationDate(LocalDate.now());
+        pokemonEntity.setModificationDate(LocalDate.of(1,1,1));
+        pokemonEntity.setUserCreation(name);
+        pokemonEntity.setUserModification("");
+        pokemonRepository.save(pokemonEntity);
+
+        for (String pokemonType : pokemonDTO.getTypeList()) {
+            PokemonTypeEntity pokemonTypeEntity = new PokemonTypeEntity();
+            pokemonTypeEntity.setName(pokemonType);
+            pokemonTypeEntity.setCreationDate(LocalDate.now());
+            pokemonTypeEntity.setModificationDate(LocalDate.of(1,1,1));
+            pokemonTypeEntity.setUserCreation(name);
+            pokemonTypeEntity.setUserModification("");
+            pokemonTypeEntity.setPokemon(pokemonEntity);
+            pokemonTypeRepository.save(pokemonTypeEntity);
+        }
+
+        outputPokemonDTO.setTypeList(pokemonDTO.getTypeList());
+
+        for (PokemonStatsDTO pokemonStatsDTO : pokemonDTO.getStatsList()) {
+            PokemonStatsEntity pokemonStatsEntity = new PokemonStatsEntity();
+            pokemonStatsEntity.setName(pokemonStatsDTO.getName());
+            pokemonStatsEntity.setValue(pokemonStatsDTO.getValue());
+            pokemonStatsEntity.setCreationDate(LocalDate.now());
+            pokemonStatsEntity.setModificationDate(LocalDate.of(1,1,1));
+            pokemonStatsEntity.setUserCreation(name);
+            pokemonStatsEntity.setUserModification("");
+            pokemonStatsEntity.setPokemon(pokemonEntity);
+            pokemonStatsRepository.save(pokemonStatsEntity);
+        }
+        outputPokemonDTO.setStatsList(pokemonDTO.getStatsList());
+
+        outputPokemonDTO.setName(pokemonDTO.getName());
+        outputPokemonDTO.setImageUrl(pokemonDTO.getImageUrl());
+        outputPokemonDTO.setId(pokemonEntity.getId());
+
+        return outputPokemonDTO;
     }
 
     @Override
     public void delete(int id) {
 
+        PokemonEntity pokemonEntity = pokemonRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Resource with Id " + id + " not found"));
+
+        List<PokemonTypeEntity> pokemonTypeEntityList = pokemonEntity.getPokemonTypeList();
+        for (PokemonTypeEntity pokemonTypeEntity : pokemonTypeEntityList) {
+            pokemonTypeRepository.delete(pokemonTypeEntity);
+        }
+
+        List<PokemonStatsEntity> pokemonStatsEntityList = pokemonEntity.getPokemonStatsList();
+        for (PokemonStatsEntity pokemonStatsEntity : pokemonStatsEntityList) {
+            pokemonStatsRepository.delete(pokemonStatsEntity);
+        }
+
+        pokemonRepository.delete(pokemonEntity);
     }
 }
