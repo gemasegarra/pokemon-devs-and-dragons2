@@ -1,7 +1,6 @@
 package com.ironhack.trainersservice.service.impl;
 
-import com.ironhack.trainersservice.controller.dto.TrainerInputDTO;
-import com.ironhack.trainersservice.controller.dto.TrainerOutputDTO;
+import com.ironhack.trainersservice.controller.dto.TrainerDTO;
 import com.ironhack.trainersservice.enums.Hobby;
 import com.ironhack.trainersservice.model.Trainer;
 import com.ironhack.trainersservice.repository.TrainerRepository;
@@ -23,14 +22,18 @@ public class TrainerServiceImpl implements TrainerService {
     private TrainerRepository trainerRepository;
 
     @Override
-    public TrainerOutputDTO addTrainer(TrainerInputDTO trainerDTO) {
-        Trainer trainer = new Trainer(trainerDTO.getName(), trainerDTO.getAge(), Hobby.valueOf(trainerDTO.getHobby().toUpperCase()), trainerDTO.getPicture(), new Date());
-        trainerRepository.save(trainer);
-        return new TrainerOutputDTO(trainer.getId(), trainer.getName(), trainer.getAge(), trainer.getHobby().toString(), trainer.getPicture());
+    public TrainerDTO addTrainer(TrainerDTO trainerDTO) {
+        Optional<Trainer> optionalTrainer = trainerRepository.findById(trainerDTO.getName());
+        if (optionalTrainer.isEmpty()) {
+            Trainer trainer = new Trainer(trainerDTO.getName(), trainerDTO.getAge(), Hobby.valueOf(trainerDTO.getHobby().toUpperCase()), trainerDTO.getPicture(), new Date());
+            trainerRepository.save(trainer);
+            return trainerDTO;
+        } throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is already a trainer with that name");
     }
 
+
     @Override
-    public List<TrainerOutputDTO> showTrainers() {
+    public List<TrainerDTO> showTrainers() {
         List<Trainer> trainerList = trainerRepository.findAll();
         if (trainerList.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are no trainers in the application at the moment");
@@ -38,16 +41,16 @@ public class TrainerServiceImpl implements TrainerService {
 
 
         return trainerList.stream()
-                .map(trainer -> new TrainerOutputDTO(trainer.getId(), trainer.getName(), trainer.getAge(),
+                .map(trainer -> new TrainerDTO(trainer.getName(), trainer.getAge(),
                         trainer.getHobby().toString(), trainer.getPicture()))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public TrainerOutputDTO getTrainer(Long id) {
-        Optional<Trainer> optionalTrainer = trainerRepository.findById(id);
+    public TrainerDTO getTrainer(String name) {
+        Optional<Trainer> optionalTrainer = trainerRepository.findById(name);
         if (optionalTrainer.isPresent()) {
-            return new TrainerOutputDTO(optionalTrainer.get().getId(), optionalTrainer.get().getName(), optionalTrainer.get().getAge(),
+            return new TrainerDTO(optionalTrainer.get().getName(), optionalTrainer.get().getAge(),
                     optionalTrainer.get().getHobby().toString(), optionalTrainer.get().getPicture());
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer for that id doesn't exists");
     }

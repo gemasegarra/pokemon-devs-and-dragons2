@@ -10,10 +10,9 @@ import java.util.Date;
 
 public class Trainer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(unique=true,nullable = false)
     private String name;
-    private int age;
+    private byte age;
     @Enumerated(value = EnumType.STRING)
     private Hobby hobby;
     @Column(name="photo")
@@ -26,35 +25,19 @@ public class Trainer {
     public Trainer() {
     }
 
-    public Trainer(String name, int age, Hobby hobby, String picture) {
+    public Trainer(String name, byte age, Hobby hobby, String picture) {
         this.name = name;
         this.age = age;
         this.hobby = hobby;
         this.picture = picture;
     }
 
-    public Trainer(long id, String name, int age, Hobby hobby, String picture) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.hobby = hobby;
-        this.picture = picture;
-    }
-
-    public Trainer(String name, int age, Hobby hobby, String picture, Date creationDate) {
+    public Trainer(String name, byte age, Hobby hobby, String picture, Date creationDate) {
         this.name = name;
         this.age = age;
         this.hobby = hobby;
         this.picture = picture;
         this.creationDate = creationDate;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -65,11 +48,11 @@ public class Trainer {
         this.name = name;
     }
 
-    public int getAge() {
+    public byte getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(byte age) {
         this.age = age;
     }
 

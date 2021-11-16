@@ -1,21 +1,20 @@
 package com.ironhack.trainersservice.controller.dto;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class TrainerInputDTO {
+public class TrainerDTO {
     @NotEmpty(message = "Trainer name is required")
     private String name;
     @NotNull(message="Age required")
-    private int age;
+    private byte age;
     private String hobby;
     private String picture;
 
-    public TrainerInputDTO() {
+    public TrainerDTO() {
     }
 
-    public TrainerInputDTO(String name, int age, String hobby, String picture) {
+    public TrainerDTO(String name, byte age, String hobby, String picture) {
         this.name = name;
         this.age = age;
         this.hobby = hobby;
@@ -30,11 +29,11 @@ public class TrainerInputDTO {
         this.name = name;
     }
 
-    public int getAge() {
+    public byte getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(byte age) {
         this.age = age;
     }
 
