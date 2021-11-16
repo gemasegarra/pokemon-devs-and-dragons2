@@ -1,6 +1,7 @@
 package com.ironhack.trainersservice.controller.interfaces;
 
-import com.ironhack.trainersservice.controller.dto.TrainerDTO;
+import com.ironhack.trainersservice.controller.dto.TrainerInputDTO;
+import com.ironhack.trainersservice.controller.dto.TrainerOutputDTO;
 import com.ironhack.trainersservice.model.Trainer;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface TrainerController {
 
-    TrainerDTO addTrainer(TrainerDTO trainer);
-    List<Trainer> showTrainers();
-    Trainer getTrainer(Long id);
+    TrainerOutputDTO addTrainer(TrainerInputDTO trainer);
+    List<TrainerOutputDTO> showTrainers();
+    TrainerOutputDTO getTrainer(Long id);
 }

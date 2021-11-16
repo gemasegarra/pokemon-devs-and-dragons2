@@ -1,6 +1,7 @@
 package com.ironhack.trainersservice.controller.impl;
 
-import com.ironhack.trainersservice.controller.dto.TrainerDTO;
+import com.ironhack.trainersservice.controller.dto.TrainerInputDTO;
+import com.ironhack.trainersservice.controller.dto.TrainerOutputDTO;
 import com.ironhack.trainersservice.controller.interfaces.TrainerController;
 import com.ironhack.trainersservice.model.Trainer;
 import com.ironhack.trainersservice.service.impl.TrainerServiceImpl;
@@ -19,21 +20,21 @@ public class TrainerControllerImpl implements TrainerController {
 
     @PostMapping("/trainers")
     @ResponseStatus(HttpStatus.CREATED)
-    public TrainerDTO addTrainer(@RequestBody @Valid TrainerDTO trainer) {
+    public TrainerOutputDTO addTrainer(@RequestBody @Valid TrainerInputDTO trainer) {
         return trainerService.addTrainer(trainer);
     }
 
     @Override
     @GetMapping("/trainers")
     @ResponseStatus(HttpStatus.OK)
-    public List<Trainer> showTrainers() {
+    public List<TrainerOutputDTO> showTrainers() {
         return trainerService.showTrainers();
     }
 
     @Override
     @GetMapping("/trainers/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Trainer getTrainer(@PathVariable Long id) {
+    public TrainerOutputDTO getTrainer(@PathVariable Long id) {
         return trainerService.getTrainer(id);
     }
 }

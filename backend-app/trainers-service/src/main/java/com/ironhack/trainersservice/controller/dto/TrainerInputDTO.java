@@ -1,17 +1,25 @@
 package com.ironhack.trainersservice.controller.dto;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-public class TrainerDTO {
+public class TrainerInputDTO {
     @NotEmpty(message = "Trainer name is required")
     private String name;
+    @NotNull(message="Age required")
     private int age;
-    @NotEmpty(message = "Trainer hobby is required")
     private String hobby;
-    @NotEmpty(message = "A picture is required")
     private String picture;
 
-    public TrainerDTO() {
+    public TrainerInputDTO() {
+    }
+
+    public TrainerInputDTO(String name, int age, String hobby, String picture) {
+        this.name = name;
+        this.age = age;
+        this.hobby = hobby;
+        this.picture = picture;
     }
 
     public String getName() {
