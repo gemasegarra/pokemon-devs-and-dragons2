@@ -13,7 +13,7 @@ public interface TeamClient {
     List<PokemonDTO> getAll(@PathVariable(name = "name") String name);
 
     @PostMapping("/pokemons/{name}")
-    void store(@PathVariable(name = "name") String name, @RequestBody PokemonDTO pokemonDTO);
+    PokemonDTO store(@PathVariable(name = "name") String name, @RequestBody PokemonDTO pokemonDTO);
 
     @DeleteMapping("/pokemons/{id}")
     void delete(@PathVariable(name = "id") int id);

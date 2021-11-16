@@ -3,6 +3,7 @@ package com.ironhack.edgeservice.service.impl;
 import com.ironhack.edgeservice.client.TeamClient;
 import com.ironhack.edgeservice.client.TrainersClient;
 import com.ironhack.edgeservice.controller.dto.PokemonDTO;
+import com.ironhack.edgeservice.controller.dto.TrainerDTO;
 import com.ironhack.edgeservice.service.interfaces.EdgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,24 @@ public class EdgeServiceImpl implements EdgeService {
         return teamClient.getAll(name);
     }
 
-    public void store(String name, PokemonDTO pokemonDTO) {
-        teamClient.store(name, pokemonDTO);
+    public PokemonDTO store(String name, PokemonDTO pokemonDTO) {
+        return teamClient.store(name, pokemonDTO);
     }
 
     public void delete(int id) {
         teamClient.delete(id);
+    }
+
+
+    public TrainerDTO addTrainer(TrainerDTO trainer) {
+        return trainersClient.addTrainer(trainer);
+    }
+
+    public List<TrainerDTO> showTrainers() {
+        return trainersClient.showTrainers();
+    }
+
+    public TrainerDTO getTrainer(String name) {
+        return trainersClient.getTrainer(name);
     }
 }

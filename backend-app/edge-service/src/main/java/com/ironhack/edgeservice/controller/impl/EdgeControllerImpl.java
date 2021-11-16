@@ -1,12 +1,14 @@
 package com.ironhack.edgeservice.controller.impl;
 
 import com.ironhack.edgeservice.controller.dto.PokemonDTO;
+import com.ironhack.edgeservice.controller.dto.TrainerDTO;
 import com.ironhack.edgeservice.controller.interfaces.EdgeController;
 import com.ironhack.edgeservice.service.interfaces.EdgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,8 +27,8 @@ public class EdgeControllerImpl implements EdgeController {
 
     @PostMapping("/pokemons/{name}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void store(@PathVariable(name = "name") String name, @RequestBody PokemonDTO pokemonDTO) {
-        edgeService.store(name, pokemonDTO);
+    public PokemonDTO store(@PathVariable(name = "name") String name, @RequestBody PokemonDTO pokemonDTO) {
+        return edgeService.store(name, pokemonDTO);
     }
 
     @DeleteMapping("/pokemons/{id}")
@@ -34,4 +36,27 @@ public class EdgeControllerImpl implements EdgeController {
     public void delete(@PathVariable(name = "id") int id) {
         edgeService.delete(id);
     }
+
+
+
+    @PostMapping("/trainers")
+    @ResponseStatus(HttpStatus.CREATED)
+    public TrainerDTO addTrainer(@RequestBody @Valid TrainerDTO trainer) {
+        return edgeService.addTrainer(trainer);
+    }
+
+    @GetMapping("/trainers")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TrainerDTO> showTrainers() {
+        return edgeService.showTrainers();
+    }
+
+    @GetMapping("/trainers/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public TrainerDTO getTrainer(@PathVariable String name) {
+        return edgeService.getTrainer(name);
+    }
+
+
+
 }
