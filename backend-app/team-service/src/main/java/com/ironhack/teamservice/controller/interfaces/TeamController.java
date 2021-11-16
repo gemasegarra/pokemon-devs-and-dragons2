@@ -7,6 +7,6 @@ import java.util.List;
 public interface TeamController {
 
     List<PokemonDTO> getAll(String name);
-    void store(String name, PokemonDTO pokemonDTO);
+    PokemonDTO store(String name, PokemonDTO pokemonDTO);
     void delete(int id);
 }

@@ -26,9 +26,9 @@ public class TeamControllerImpl implements TeamController {
     @Override
     @PostMapping("/pokemons/{name}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void store(@PathVariable(name = "name") String name, @RequestBody PokemonDTO pokemonDTO) {
+    public PokemonDTO store(@PathVariable(name = "name") String name, @RequestBody PokemonDTO pokemonDTO) {
 
-        teamService.store(name, pokemonDTO);
+        return teamService.store(name, pokemonDTO);
     }
 
     @Override

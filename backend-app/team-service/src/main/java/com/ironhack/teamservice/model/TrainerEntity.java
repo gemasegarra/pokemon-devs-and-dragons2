@@ -36,24 +36,12 @@ public class TrainerEntity {
         this.name = name;
     }
 
-    public byte getAge() {
-        return age;
-    }
-
     public void setAge(byte age) {
         this.age = age;
     }
 
-    public String getHobby() {
-        return hobby;
-    }
-
     public void setHobby(String hobby) {
         this.hobby = hobby;
-    }
-
-    public String getPhoto() {
-        return photo;
     }
 
     public void setPhoto(String photo) {
@@ -64,39 +52,11 @@ public class TrainerEntity {
         return pokemonList;
     }
 
-    public void setPokemonList(List<PokemonEntity> pokemonList) {
-        this.pokemonList = pokemonList;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
-    public LocalDate getModificationDate() {
-        return modificationDate;
-    }
-
-    public void setModificationDate(LocalDate modificationDate) {
-        this.modificationDate = modificationDate;
-    }
-
-    public String getUserCreation() {
-        return userCreation;
-    }
-
     public void setUserCreation(String userCreation) {
         this.userCreation = userCreation;
-    }
-
-    public String getUserModification() {
-        return userModification;
-    }
-
-    public void setUserModification(String userModification) {
-        this.userModification = userModification;
     }
 }
