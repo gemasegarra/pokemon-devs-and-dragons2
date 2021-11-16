@@ -1,0 +1,4 @@
+<div class="container components">
+    <app-pokemon-list (selectPokemon)="onSelectedPokemon($event)"></app-pokemon-list>
+    <app-pokemon-detail *ngIf="selectedPokemon" [pokemon]="selectedPokemon"></app-pokemon-detail>
+</div>
