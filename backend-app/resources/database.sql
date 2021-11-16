@@ -22,33 +22,19 @@ CREATE TABLE trainer(
 	PRIMARY KEY(name)
 );
 
-DROP TABLE IF EXISTS team;
+DROP TABLE IF EXISTS pokemon;
 
-CREATE TABLE team(
-	id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE pokemon(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	trainer_name VARCHAR(255),
+	name VARCHAR(255),
+    image_url VARCHAR(255),
     creation_date DATE,
     modification_date DATE,
     user_creation VARCHAR(255),
     user_modification VARCHAR(255),
 	PRIMARY KEY(id),
     FOREIGN KEY(trainer_name) REFERENCES trainer(name)
-);
-
-DROP TABLE IF EXISTS pokemon;
-
-CREATE TABLE pokemon(
-	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	team_id INT,
-	name VARCHAR(255),
-    image_url VARCHAR(255),
-    weight INT,
-    creation_date DATE,
-    modification_date DATE,
-    user_creation VARCHAR(255),
-    user_modification VARCHAR(255),
-	PRIMARY KEY(id),
-    FOREIGN KEY(team_id) REFERENCES team(id)
 );
 
 DROP TABLE IF EXISTS pokemon_type;
