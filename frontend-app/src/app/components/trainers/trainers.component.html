@@ -17,14 +17,16 @@
         </div>
         <div class="form-group">
           <label>Hobby</label>
-          <select (change)="selectPicture()"class="form-select" formControlName="hobby">
+          <select (change)="selectPicture() "class="form-select" formControlName="hobby">
             <option invalid value="">Select a hobby</option>
             <option  *ngFor="let hobby of hobbiesList; let i = index" [value]="hobby">{{hobby}}</option>
           </select>
         </div>
         <div class="form-group">
           <label>Photo</label>
-          <input type="text" class="form-control" placeholder="Choose photo or select hobby" formControlName="picture">
+          <input type="text" class="form-control" placeholder="Choose photo or select hobby" formControlName="picture" [readOnly]="hobbySelected" [ngClass]="{'is-valid':(pictureInput.valid && pictureInput.touched) || pictureInput.valid ==true, 'is-invalid':pictureInput.invalid && (pictureInput.touched || pictureInput.dirty)==true}">
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please choose a valid url picture</div>
         </div>
         <button type="submit" class="btn btn-dark" [disabled]="registerForm.invalid">Create trainer</button>
       </form>
