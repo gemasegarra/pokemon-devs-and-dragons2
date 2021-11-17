@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = "http://localhost:4200")
 public class EdgeControllerImpl implements EdgeController {
 
 
