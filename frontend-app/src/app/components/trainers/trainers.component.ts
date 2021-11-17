@@ -53,35 +53,40 @@ export class TrainersComponent implements OnInit {
   ngOnInit(): void {
     this.trainerService.getTrainers().subscribe(dataResult => {
       this.trainerList = dataResult;
-      console.log(dataResult);
     })
   }
 
 
   onSubmit(): void {
-    console.log("Creating trainer")
-    console.log(this.registerForm.value)
+    console.log("Creating trainer");
+    console.log(this.registerForm.value);
   }
 
   selectPicture(): void {
     for (let index = 0; index < this.hobbiesList.length; index++) {
       if (this.hobbyInput.value == this.hobbiesList[index])
-        this.pictureInput.setValue(this.pictureList[index])
+        this.pictureInput.setValue(this.pictureList[index]);
     }
 
     if (this.registerForm.value.hobby !== "") {
       this.hobbySelected = true;
     } else {
       this.hobbySelected = false;
-      this.registerForm.value.hobby = "Custom"
+      this.registerForm.value.hobby = "Custom";
     }
 
     console.log(this.registerForm.value)
   }
 
-  deleteTrainer(): void {
-    console.log("Deleting trainer")
+  deleteTrainer(name: string, index: number): void {
+    this.trainerService.deleteTrainer(name).subscribe({
+      next: dataResult => {
+        this.trainerList.splice(index, 1);
+      }
+      ,
+      error: error => {
+        console.error("Ther was an error!", error);
+      }
+    })
   }
-
-
 }

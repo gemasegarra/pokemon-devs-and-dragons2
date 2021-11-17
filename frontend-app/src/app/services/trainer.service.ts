@@ -18,4 +18,8 @@ export class TrainerService {
   getTrainers(): Observable<Trainer[]> {
     return this.http.get<Trainer[]>(this.baseUrl + '/trainers');
   }
+
+  deleteTrainer(name: string): Observable<any> {
+    return this.http.delete(this.baseUrl + '/trainers/' + name);
+  }
 }

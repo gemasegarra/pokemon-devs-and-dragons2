@@ -15,10 +15,8 @@ import java.util.List;
 @CrossOrigin(value = "http://localhost:4200")
 public class EdgeControllerImpl implements EdgeController {
 
-
     @Autowired
     private EdgeService edgeService;
-
 
     @GetMapping("/pokemons/{name}")
     @ResponseStatus(HttpStatus.OK)
@@ -37,8 +35,6 @@ public class EdgeControllerImpl implements EdgeController {
     public void delete(@PathVariable(name = "id") int id) {
         edgeService.delete(id);
     }
-
-
 
     @PostMapping("/trainers")
     @ResponseStatus(HttpStatus.CREATED)
@@ -61,7 +57,7 @@ public class EdgeControllerImpl implements EdgeController {
     @DeleteMapping("trainers/{name}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTrainer(@PathVariable String name) {
-
+        edgeService.deleteTrainer(name);
     }
 
 
