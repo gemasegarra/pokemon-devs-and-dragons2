@@ -22,4 +22,7 @@ public interface TrainersClient {
 
     @GetMapping("/trainers/{name}")
     TrainerDTO getTrainer(@PathVariable String name);
+
+    @DeleteMapping("trainers/{name}")
+    void deleteTrainer(@PathVariable String name);
 }

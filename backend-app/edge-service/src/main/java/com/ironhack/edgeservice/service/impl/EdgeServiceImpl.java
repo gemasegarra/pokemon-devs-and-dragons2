@@ -44,4 +44,6 @@ public class EdgeServiceImpl implements EdgeService {
     public TrainerDTO getTrainer(String name) {
         return trainersClient.getTrainer(name);
     }
+
+    public void deleteTrainer(String name){ trainersClient.deleteTrainer(name);}
 }

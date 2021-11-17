@@ -58,6 +58,11 @@ public class EdgeControllerImpl implements EdgeController {
         return edgeService.getTrainer(name);
     }
 
+    @DeleteMapping("trainers/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTrainer(@PathVariable String name) {
+
+    }
 
 
 }
