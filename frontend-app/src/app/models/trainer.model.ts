@@ -1,7 +1,6 @@
 export class Trainer{
 
   constructor(
-    private _id: number,
     private _name: string,
     private _age: number,
     private _hobby: string,
@@ -10,12 +9,6 @@ export class Trainer{
 
   }
 
-  public get id(): number {
-    return this._id;
-  }
-  public set id(value: number) {
-    this._id = value;
-  }
   public get picture(): string {
     return this._picture;
   }
