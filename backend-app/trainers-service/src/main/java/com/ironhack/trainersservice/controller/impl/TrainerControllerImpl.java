@@ -36,4 +36,13 @@ public class TrainerControllerImpl implements TrainerController {
     public TrainerDTO getTrainer(@PathVariable String name) {
         return trainerService.getTrainer(name);
     }
+
+    @Override
+    @DeleteMapping("/trainers/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTrainer(@PathVariable String name) {
+        trainerService.deleteTrainer(name);
+    }
+
+
 }

@@ -52,7 +52,15 @@ public class TrainerServiceImpl implements TrainerService {
         if (optionalTrainer.isPresent()) {
             return new TrainerDTO(optionalTrainer.get().getName(), optionalTrainer.get().getAge(),
                     optionalTrainer.get().getHobby().toString(), optionalTrainer.get().getPicture());
-        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer for that id doesn't exists");
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer with name " + name  + " doesn't exist");
+    }
+
+    public void deleteTrainer(String name){
+        Trainer trainerToDelete = trainerRepository.findById(name).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Trainer with name " + name  + " doesn't exist"));
+            trainerRepository.delete(trainerToDelete);
     }
 
 }
+
+
+
