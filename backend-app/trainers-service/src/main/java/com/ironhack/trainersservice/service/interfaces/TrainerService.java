@@ -10,4 +10,6 @@ public interface TrainerService {
     TrainerDTO addTrainer(TrainerDTO trainer);
     List<TrainerDTO> showTrainers();
     TrainerDTO getTrainer(String name);
+    void deleteTrainer(String name);
+
 }

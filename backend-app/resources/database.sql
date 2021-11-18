@@ -23,7 +23,9 @@ CREATE TABLE trainer(
 );
 
 INSERT INTO trainer(name, age, hobby, photo, creation_date , modification_date , user_creation, user_modification)
-VALUES ("JhonDoe", 22, "Pokemon Hunter" , "https://pokemon.fandom.com/es/wiki/Haunter?file=Haunter.png" , '2021-11-16', '0001-01-01', "Initial query" , "");
+VALUES ("JhonDoe", 22, "BUGCATCHER" , "https://cdn2.bulbagarden.net/upload/5/55/Red_Blue_Bug_Catcher.png" , '2021-11-16', '0001-01-01', "Initial query" , ""),
+("JhonDoe2", 33, "BLACKBELT" , "https://cdn2.bulbagarden.net/upload/8/81/XY_Black_Belt.png" , '2021-11-16', '0001-01-01', "Initial query" , ""),
+("JhonDoe3", 44, "PICNICKER" , "https://cdn2.bulbagarden.net/upload/2/22/ORAS_Picnicker.png" , '2021-11-16', '0001-01-01', "Initial query" , "");
 
 DROP TABLE IF EXISTS pokemon;
 

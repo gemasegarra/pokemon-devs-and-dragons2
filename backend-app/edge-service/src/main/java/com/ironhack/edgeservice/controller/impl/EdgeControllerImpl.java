@@ -12,12 +12,11 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = "http://localhost:4200")
 public class EdgeControllerImpl implements EdgeController {
-
 
     @Autowired
     private EdgeService edgeService;
-
 
     @GetMapping("/pokemons/{name}")
     @ResponseStatus(HttpStatus.OK)
@@ -37,8 +36,6 @@ public class EdgeControllerImpl implements EdgeController {
         edgeService.delete(id);
     }
 
-
-
     @PostMapping("/trainers")
     @ResponseStatus(HttpStatus.CREATED)
     public TrainerDTO addTrainer(@RequestBody @Valid TrainerDTO trainer) {
@@ -57,6 +54,11 @@ public class EdgeControllerImpl implements EdgeController {
         return edgeService.getTrainer(name);
     }
 
+    @DeleteMapping("trainers/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTrainer(@PathVariable String name) {
+        edgeService.deleteTrainer(name);
+    }
 
 
 }
