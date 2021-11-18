@@ -13,6 +13,7 @@ export class TrainersComponent implements OnInit {
   trainerList: Trainer[]
   hobbiesList: string[]
   pictureList: string[]
+  isTrainerListEmpty: boolean;
 
   registerForm: FormGroup;
   nameInput: FormControl;
@@ -23,7 +24,9 @@ export class TrainersComponent implements OnInit {
   hobbySelected: boolean;
 
   constructor(private trainerService: TrainerService) {
+
     this.trainerList = [];
+    this.isTrainerListEmpty = true;
 
     this.hobbiesList = ["Bugcatcher", "Blackbelt", "Picnicker", "Champion", "Hiker", "Fisherman", "Scientist", "Swimmer", "Pokemaniac", "Cooltrainer"];
     this.pictureList = ["https://cdn2.bulbagarden.net/upload/5/55/Red_Blue_Bug_Catcher.png", "https://cdn2.bulbagarden.net/upload/8/81/XY_Black_Belt.png", "https://cdn2.bulbagarden.net/upload/2/22/ORAS_Picnicker.png",
@@ -51,18 +54,46 @@ export class TrainersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.trainerService.getTrainers().subscribe(dataResult => {
-      this.trainerList = dataResult;
+
+    this.trainerService.getTrainers().subscribe({
+      next: dataResult => {
+        this.trainerList = dataResult;
+        if (this.trainerList.length == 0) {
+          this.isTrainerListEmpty = true;
+        } else {
+          this.isTrainerListEmpty = false;
+        }
+      }
+      ,
+      error: error => {
+        console.error("Ther was an error!", error);
+      }
     })
   }
 
 
   onSubmit(): void {
-    console.log("Creating trainer");
-    console.log(this.registerForm.value);
+
+    const name: string = this.registerForm.get('name')?.value;
+    const age: number = this.registerForm.get('age')?.value;
+    const hobby: string = this.registerForm.get('hobby')?.value;
+    const picture: string = this.registerForm.get('picture')?.value;
+    const trainer = new Trainer(name, age, hobby, picture);
+
+    this.trainerService.addTrainer(trainer).subscribe({
+      next: dataResult => {
+        this.trainerList.push(trainer);
+        this.isTrainerListEmpty = false;
+      }
+      ,
+      error: error => {
+        console.error("Ther was an error!", error);
+      }
+    })
   }
 
   selectPicture(): void {
+
     for (let index = 0; index < this.hobbiesList.length; index++) {
       if (this.hobbyInput.value == this.hobbiesList[index])
         this.pictureInput.setValue(this.pictureList[index]);
@@ -74,14 +105,18 @@ export class TrainersComponent implements OnInit {
       this.hobbySelected = false;
       this.registerForm.value.hobby = "Custom";
     }
-
-    console.log(this.registerForm.value)
   }
 
   deleteTrainer(name: string, index: number): void {
+
     this.trainerService.deleteTrainer(name).subscribe({
       next: dataResult => {
         this.trainerList.splice(index, 1);
+        if (this.trainerList.length == 0) {
+          this.isTrainerListEmpty = true;
+        } else {
+          this.isTrainerListEmpty = false;
+        }
       }
       ,
       error: error => {

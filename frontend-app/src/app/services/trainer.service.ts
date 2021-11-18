@@ -22,4 +22,16 @@ export class TrainerService {
   deleteTrainer(name: string): Observable<any> {
     return this.http.delete(this.baseUrl + '/trainers/' + name);
   }
+
+  addTrainer(trainer: Trainer): Observable<Trainer> {
+
+    const body = {
+      name: trainer.name,
+      age: trainer.age,
+      hobby: trainer.hobby,
+      picture: trainer.picture
+    }
+
+    return this.http.post<any>(this.baseUrl + '/trainers', body);
+  }
 }
