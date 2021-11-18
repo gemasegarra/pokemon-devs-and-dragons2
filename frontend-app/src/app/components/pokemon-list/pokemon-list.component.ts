@@ -10,7 +10,7 @@ import { Output, EventEmitter } from '@angular/core';
 export class PokemonListComponent implements OnInit {
   pokemons: any[] = [];
   page = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 20;
   selectedPokemon : any;
   query: string = "";
   total: number = 0;
