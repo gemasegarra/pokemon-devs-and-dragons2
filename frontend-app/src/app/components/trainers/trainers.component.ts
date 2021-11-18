@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TrainerService } from 'src/app/services/trainer.service';
-import { CustomValidators } from 'src/app/utils/custom-validators';
+//import { CustomValidators } from 'src/app/utils/custom-validators';
 import { Trainer } from '../../models/trainer.model';
 
 @Component({
@@ -138,5 +138,5 @@ export class TrainersComponent implements OnInit {
       }
     })
   }
-  
+
 }

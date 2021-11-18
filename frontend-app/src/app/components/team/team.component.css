@@ -1,0 +1,103 @@
+.container{
+  margin-top: 8rem;
+}
+
+
+.trainer-image{
+  margin-top: 2rem;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 16rem;
+  height: 12rem;
+}
+
+
+span{
+  font-size: 0.75rem;
+}
+
+h6{
+  font-size: 0.75rem;
+}
+
+.search-card{
+  background-color: rgb(34, 117, 145);
+  padding: 0.25rem;
+}
+
+.search-card:hover{
+  color: black;
+  background-color: rgb(186, 192, 59);;
+}
+
+.close-button{
+  margin-left: auto;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+
+.pokemon-detail {
+  display: grid;
+  grid-gap: 16px;
+  padding: 20px;
+  grid-template-rows: repeat(minmax(23%, 1fr));
+ }
+
+ .pokemon-detail .box{
+     width: 400px;
+     height: 100%;
+     box-shadow: 1px 2px 5px rgba(0,0,0,0.3);
+     background-color: white;
+     text-align: center;
+ }
+
+ .pokemon-detail .box img{
+  max-width: 100px;
+  display: block;
+  margin: 0 auto;
+ }
+
+ .image-container{
+   height: 32rem;
+
+   align-items: center;
+   align-self: center;
+   align-content: center;
+   justify-content: center;
+
+   background-color: gainsboro;
+ }
+
+
+ .image-team{
+   height: 8rem;
+   width: 8rem;
+ }
+
+
+ .image-team-card{
+   display: flex;
+
+   align-items: center;
+   align-self: center;
+   align-content: center;
+   justify-content: center;
+   margin-bottom: 1rem;
+ }
+
+ .card-title{
+   margin-bottom: 12rem;
+ }
+
+
+.pokeball-detail{
+  background: url("../../../assets/img/silueta-pokeball.png");
+  margin-top: 2rem;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 16rem;
+  height: 12rem;
+}

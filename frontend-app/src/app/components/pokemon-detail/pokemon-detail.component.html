@@ -1,9 +1,9 @@
 <div class="pokemon-detail">
     <div class="box">
         <img [src]="pokemon.sprites.front_default" alt="Pokemon">
-        <h3>{{pokemon.order}} {{pokemon.name}}</h3>
+        <h3>#{{pokemon.id}} {{pokemon.name}}</h3>
         <p>
-            <b>Type:</b> {{pokemon.types[0]?.type?.name}} {{pokemon.types[1]?.type?.name}} 
+            <b>Type:</b> {{pokemon.types[0]?.type?.name}} {{pokemon.types[1]?.type?.name}}
         </p>
         <p>
             <b>Height:</b> {{pokemon.height}}
@@ -16,6 +16,6 @@
         </p>
         <p>
             <b>Special attack:</b> {{pokemon.moves[0]?.move?.name}}
-        </p>   
+        </p>
     </div>
 </div>
