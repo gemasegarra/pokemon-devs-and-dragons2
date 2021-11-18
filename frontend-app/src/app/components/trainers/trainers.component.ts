@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TrainerService } from 'src/app/services/trainer.service';
+import { CustomValidators } from 'src/app/utils/custom-validators';
 import { Trainer } from '../../models/trainer.model';
 
 @Component({
@@ -71,25 +72,38 @@ export class TrainersComponent implements OnInit {
     })
   }
 
-
   onSubmit(): void {
 
     const name: string = this.registerForm.get('name')?.value;
-    const age: number = this.registerForm.get('age')?.value;
-    const hobby: string = this.registerForm.get('hobby')?.value;
-    const picture: string = this.registerForm.get('picture')?.value;
-    const trainer = new Trainer(name, age, hobby, picture);
 
-    this.trainerService.addTrainer(trainer).subscribe({
-      next: dataResult => {
-        this.trainerList.push(trainer);
-        this.isTrainerListEmpty = false;
+    let repeatName: boolean = false;
+    for (let i: number = 0; i < this.trainerList.length; i++) {
+      console.log("name:" + this.trainerList[i].name);
+      if (name === this.trainerList[i].name) {
+        repeatName = true;
       }
-      ,
-      error: error => {
-        console.error("Ther was an error!", error);
-      }
-    })
+    }
+
+    if (!repeatName) {
+      const age: number = this.registerForm.get('age')?.value;
+      const hobby: string = this.registerForm.get('hobby')?.value;
+      const picture: string = this.registerForm.get('picture')?.value;
+      const trainer = new Trainer(name, age, hobby, picture);
+
+      this.trainerService.addTrainer(trainer).subscribe({
+        next: dataResult => {
+          this.trainerList.push(trainer);
+          this.isTrainerListEmpty = false;
+          this.registerForm.reset();
+        }
+        ,
+        error: error => {
+          console.error("Ther was an error!", error);
+        }
+      })
+    } else {
+      alert("Please, enter a non-repeated name");
+    }
   }
 
   selectPicture(): void {
@@ -124,4 +138,5 @@ export class TrainersComponent implements OnInit {
       }
     })
   }
+  
 }
