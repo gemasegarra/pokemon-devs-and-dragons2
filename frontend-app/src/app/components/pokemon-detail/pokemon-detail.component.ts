@@ -12,10 +12,12 @@ export class PokemonDetailComponent implements OnInit {
   @Input()
   pokemon: any;
 
-  constructor(private PokemonService: PokemonService) { }
+  constructor(private PokemonService: PokemonService) {
+    
+  }
 
   ngOnInit(): void {
-    
+    console.log(this.pokemon)
   }
 
 }

@@ -8,6 +8,9 @@
             <app-pokemon-list (selectPokemon)="onSelectedPokemon($event)"></app-pokemon-list>
         </div>
         <div>
+            <div  *ngIf="!selectedPokemon" class="screenOff">
+                <div>Choose a Pokémon!</div>
+            </div>
             <app-pokemon-detail *ngIf="selectedPokemon" [pokemon]="selectedPokemon"></app-pokemon-detail>
         </div>
     </div>

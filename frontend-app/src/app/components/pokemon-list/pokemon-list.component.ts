@@ -34,7 +34,7 @@ export class PokemonListComponent implements OnInit {
             .subscribe((uniqResponse: any) =>{
               this.pokemons.push(uniqResponse);
               this.pokemons.sort(function(a, b) {
-                return a.order - b.order;
+                return a.id - b.id;
               });  
             });
         });
