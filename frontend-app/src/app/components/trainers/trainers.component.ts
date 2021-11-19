@@ -55,20 +55,7 @@ export class TrainersComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.trainerService.getTrainers().subscribe({
-      next: dataResult => {
-        this.trainerList = dataResult;
-        if (this.trainerList.length == 0) {
-          this.isTrainerListEmpty = true;
-        } else {
-          this.isTrainerListEmpty = false;
-        }
-      }
-      ,
-      error: error => {
-        console.error("Ther was an error!", error);
-      }
-    })
+   this.getTrainers();
   }
 
   onSubmit(): void {
@@ -85,19 +72,21 @@ export class TrainersComponent implements OnInit {
 
     if (!repeatName) {
       const age: number = this.registerForm.get('age')?.value;
-      const hobby: string = this.registerForm.get('hobby')?.value;
+      let hobby: string | undefined = this.registerForm.get('hobby')?.value;
+      if (hobby?.length === 0) {
+        hobby = undefined;
+      }
       const picture: string = this.registerForm.get('picture')?.value;
       const trainer = new Trainer(name, age, hobby, picture);
 
       this.trainerService.addTrainer(trainer).subscribe({
         next: dataResult => {
-          this.trainerList.push(trainer);
-          this.isTrainerListEmpty = false;
           this.registerForm.reset();
+          this.getTrainers();
         }
         ,
         error: error => {
-          console.error("Ther was an error!", error);
+          console.error("There was an error!", error);
         }
       })
     } else {
@@ -138,4 +127,20 @@ export class TrainersComponent implements OnInit {
     })
   }
 
+  getTrainers(){
+    this.trainerService.getTrainers().subscribe({
+    next: dataResult => {
+      this.trainerList = dataResult;
+      if (this.trainerList.length == 0) {
+        this.isTrainerListEmpty = true;
+      } else {
+        this.isTrainerListEmpty = false;
+      }
+    }
+    ,
+    error: error => {
+      console.error("Ther was an error!", error);
+    }
+  })
+  }
 }

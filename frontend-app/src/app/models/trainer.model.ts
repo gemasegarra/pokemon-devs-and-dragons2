@@ -3,7 +3,7 @@ export class Trainer{
   constructor(
     private _name: string,
     private _age: number,
-    private _hobby: string,
+    private _hobby: string | undefined,
     private _picture: string
   ){
 
@@ -15,10 +15,10 @@ export class Trainer{
   public set picture(value: string) {
     this._picture = value;
   }
-  public get hobby(): string {
+  public get hobby(): string | undefined {
     return this._hobby;
   }
-  public set hobby(value: string) {
+  public set hobby(value: string | undefined) {
     this._hobby = value;
   }
   public get age(): number {
