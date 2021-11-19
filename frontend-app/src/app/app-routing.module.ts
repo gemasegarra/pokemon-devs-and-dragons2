@@ -5,9 +5,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PokemonListComponent } from './components/pokemon-list/pokemon-list.component';
 import { PokedexComponent } from './pokedex/pokedex.component';
+import { WellcomePageComponent } from './components/wellcome-page/wellcome-page.component';
 
 const routes: Routes = [
-  {path: "", component: TrainersComponent},
+  {path: "", component: WellcomePageComponent,},
   {path: "pokedex", component: PokedexComponent},
   {path: "teams", component: TeamComponent},
   {path: "trainers", component: TrainersComponent},
