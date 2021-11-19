@@ -138,7 +138,7 @@ export class TeamComponent implements OnInit {
 
 
 
-    this.pokemonsMatch = this.allPokemons.filter(pokemon => pokemon.includes(this.searcherInput))
+    this.pokemonsMatch = this.allPokemons.filter(pokemon => pokemon.includes(this.searcherInput.toLowerCase()))
 
     this.allPokemons = []
 
@@ -163,7 +163,7 @@ export class TeamComponent implements OnInit {
       this.pokemonsMatch = []
     }
 
-    if(this.searcherInput === this.pokemonsMatch[0]){
+    if(this.searcherInput.toLowerCase() === this.pokemonsMatch[0]){
       this.PokemonService.getPokemonDetails(this.pokemonsMatch[0]).subscribe((response: any)=>{
 
         this.selectedPokemon = response
