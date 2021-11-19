@@ -24,6 +24,7 @@ h6{
 .search-card{
   background-color: rgb(34, 117, 145);
   padding: 0.25rem;
+  cursor: pointer;
 }
 
 .search-card:hover{
@@ -91,6 +92,10 @@ h6{
    margin-bottom: 12rem;
  }
 
+ .image-team-card:hover{
+   background-color: lightyellow;
+ }
+
 
 .pokeball-detail{
   background: url("../../../assets/img/silueta-pokeball.png");
@@ -100,4 +105,14 @@ h6{
   background-repeat: no-repeat;
   width: 16rem;
   height: 12rem;
+}
+
+.first-zero{
+  color: black;
+  background-color: white;
+}
+
+.first-one{
+  background-color: black;
+  color: lightyellow;
 }

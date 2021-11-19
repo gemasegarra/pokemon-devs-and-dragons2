@@ -17,7 +17,8 @@
         <h4 class="card-title text-center m-1">Trainer's Team</h4>
         <div class="row">
             <div class="col-4 col-sm-4 col-md-4 col-lg-4" *ngFor="let pokemon of teamPokemon">
-              <div class="card d-flex image-team-card">
+              <!-- <div class="card d-flex image-team-card" [ngClass]="{ 'first-zero': stateZeroOne == true, 'first-one': stateZeroOne == false }" (mouseover)="changeColorOne()" (mouseout)="changeColorOne()"> -->
+                <div class="card d-flex image-team-card">
               <small class="close-button ms-auto"><b>X</b></small>
              <img class="image-team" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png">
              <h6 class="text-center">#1 <span>Charizard</span></h6>
@@ -41,7 +42,7 @@
 <div class="row">
   <div class="col-12 col-sm-12 col-md-4 col-lg-4 ">
     <h2 class="text-center">Use the search engine</h2>
-    <input class="form-control" [(ngModel)]="searcherInput" (keyup)="searcher()">
+    <input class="form-control" [(ngModel)]="searcherInput" (keyup)="searcher()" (keyup.enter)="addPokemon()">
     <h2 class="text-center mt-2">Pokemon selected</h2>
     <div class="pokemon-detail d-flex justify-content-center" *ngIf="!selectedPokemon">
       <div class="box">

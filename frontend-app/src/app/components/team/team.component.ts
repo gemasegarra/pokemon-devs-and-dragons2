@@ -39,6 +39,10 @@ export class TeamComponent implements OnInit {
 
   detailsPokemonOpen!: boolean;
 
+  stateZeroOne: boolean = true;
+
+
+
   constructor(
     private PokemonService: PokemonService
   ) {
@@ -78,6 +82,11 @@ export class TeamComponent implements OnInit {
   selectTrainer(): void{
     this.pictureSelected = this.trainerInput
     console.log(this.pictureSelected)
+  }
+
+  changeColorOne(){
+
+    this.stateZeroOne = !this.stateZeroOne;
   }
 
 
@@ -152,6 +161,15 @@ export class TeamComponent implements OnInit {
 
     if(this.searcherInput === ""){
       this.pokemonsMatch = []
+    }
+
+    if(this.searcherInput === this.pokemonsMatch[0]){
+      this.PokemonService.getPokemonDetails(this.pokemonsMatch[0]).subscribe((response: any)=>{
+
+        this.selectedPokemon = response
+        console.log(this.selectedPokemon)
+          })
+
     }
 
 
