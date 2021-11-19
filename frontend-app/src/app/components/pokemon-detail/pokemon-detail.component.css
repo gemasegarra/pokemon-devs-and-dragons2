@@ -18,7 +18,22 @@
    }
 
    .pokemon-detail .box img{
-    max-width: 100px;
     display: block;
     margin: 0 auto;
+   }
+
+   .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    text-transform: uppercase;
+   }
+
+   .type {
+       font-size: large;
+   }
+
+   .img {
+     height: 300px;
+     width: 300px;   
    }

@@ -12,6 +12,8 @@ import { PokemonDetailComponent } from './components/pokemon-detail/pokemon-deta
 import { PokemonListComponent } from './components/pokemon-list/pokemon-list.component';
 import { PokedexComponent } from './pokedex/pokedex.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TeamComponent } from './components/team/team.component';
+import { CardDetailsComponent } from './components/card-details/card-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PageNotFoundComponent,
     PokemonDetailComponent,
     PokemonListComponent,
-    PokedexComponent
+    PokedexComponent,
+    TeamComponent,
+    CardDetailsComponent
   ],
   imports: [
     BrowserModule,

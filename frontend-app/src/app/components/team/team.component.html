@@ -1,0 +1,108 @@
+<div  class="container">
+  <div class="row">
+    <div class="image-container d-flex align-items-center card col-12 col-sm-12 col-md-12 col-lg-3 ">
+      <h4 class="card-title text-center m-1">Trainer selected</h4>
+      <div class="trainer-image mb-5" [ngStyle]="{'background-image': 'url('+pictureSelected+')'}"></div>
+      <div>
+
+        <label>Select a trainer</label>
+        <select (change)="selectTrainer()" class="form-select" [(ngModel)]="trainerInput">
+          <option *ngFor="let trainer of trainerList; let i = index" [value]="trainer.name">{{trainer.name}}</option>
+        </select>
+        </div>
+
+    </div>
+
+      <div class="image-container card col-12 col-sm-12 col-md-12 col-lg-6 ">
+        <h4 class="card-title text-center m-1">Trainer's Team</h4>
+        <div class="row">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4" *ngFor="let pokemon of teamPokemon">
+              <!-- <div class="card d-flex image-team-card" [ngClass]="{ 'first-zero': stateZeroOne == true, 'first-one': stateZeroOne == false }" (mouseover)="changeColorOne()" (mouseout)="changeColorOne()"> -->
+                <div class="card d-flex image-team-card">
+              <small class="close-button ms-auto"><b>X</b></small>
+             <img class="image-team" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png">
+             <h6 class="text-center">#1 <span>Charizard</span></h6>
+              <button (click)="openDetails()" class="btn btn-primary m-1">Details</button>
+            </div>
+            </div>
+        </div>
+      </div>
+      <div class="image-container d-flex align-items-center card col-12 col-sm-12 col-md-12 col-lg-3 ">
+        <h4 class="card-title text-center m-1">Pokemon selected</h4>
+
+        <div class="pokemon-detail d-flex justify-content-center" >
+          <div class="pokeball-detail mb-5"*ngIf="!detailsPokemonOpen" ></div>
+      </div>
+
+        <app-card-details class="col-12 col-sm-12 col-md-12 col-lg-12" *ngIf="detailsPokemonOpen" [pokemon]="selectedPokemon"></app-card-details>
+      </div>
+</div>
+</div>
+<div class="container mt-5">
+<div class="row">
+  <div class="col-12 col-sm-12 col-md-4 col-lg-4 ">
+    <h2 class="text-center">Use the search engine</h2>
+    <input class="form-control" [(ngModel)]="searcherInput" (keyup)="searcher()" (keyup.enter)="addPokemon()">
+    <h2 class="text-center mt-2">Pokemon selected</h2>
+    <div class="pokemon-detail d-flex justify-content-center" *ngIf="!selectedPokemon">
+      <div class="box">
+          <img src="https://m.media-amazon.com/images/I/41iijFSq7VL._AC_SX466_.jpg" alt="Pokemon">
+          <h3>??? ???</h3>
+          <p>
+              <b>Type:</b> ???
+          </p>
+          <p>
+              <b>Height:</b> ???
+          </p>
+          <p>
+              <b>Health:</b> ???
+          </p>
+          <p>
+              <b>Attack:</b> ???
+          </p>
+          <p>
+              <b>Special attack:</b> ???
+          </p>
+      </div>
+  </div>
+    <app-card-details class="col-12 col-sm-12 col-md-12 col-lg-12" *ngIf="selectedPokemon" [pokemon]="selectedPokemon"></app-card-details>
+    <div class="button-div d-flex justify-content-center mt-4 mb-2">
+    <button type="submit" (click)="addPokemon()" class="btn btn-dark ">Add pokemon</button>
+  </div>
+
+
+  </div>
+
+  <div class="col-12 col-sm-12 col-md-8 col-lg-8 ">
+    <h2 class="text-center mb-4">Catch your pokemon</h2>
+    <div class="row">
+      <div (click)="visualizePokemon(pokemon)" class="col-6 col-sm-6 col-md-3 col-lg-3 p-1" *ngFor="let pokemon of pokemonsMatch">
+        <div class="card search-card" >
+        <!-- <img [src]="pokemon.sprites.front_default"> -->
+        <h6 class="text-center m-1 badge badge-primary"><span>{{pokemon}}</span></h6>
+      </div>
+
+    </div>
+
+    </div>
+
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+ <!-- <div class="row">
+      <div (click)="visualizePokemon(pokemon)" class="col-4 col-sm-4 col-md-3 col-lg-3 p-1" *ngFor="let pokemon of pokemons | paginate: {itemsPerPage: this.itemsPerPage, currentPage: page, totalItems: this.total}">
+        <div class="card" >
+        <img [src]="pokemon.sprites.front_default">
+        <h6 class="text-center">#{{pokemon.id}} <span>{{pokemon.name.toUpperCase()}}</span></h6>
+      </div>
+      </div>
+      <pagination-controls (pageChange)="page = $event; pokemons = []; getPokemons()"></pagination-controls>
+    </div> -->

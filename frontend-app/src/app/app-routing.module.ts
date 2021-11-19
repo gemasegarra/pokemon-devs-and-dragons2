@@ -1,3 +1,4 @@
+import { TeamComponent } from '../app/components/team/team.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { TrainersComponent } from './components/trainers/trainers.component';
 import { NgModule } from '@angular/core';
@@ -8,7 +9,7 @@ import { PokedexComponent } from './pokedex/pokedex.component';
 const routes: Routes = [
   {path: "", component: TrainersComponent},
   {path: "pokedex", component: PokedexComponent},
-  {path: "teams", component: TrainersComponent},
+  {path: "teams", component: TeamComponent},
   {path: "trainers", component: TrainersComponent},
   {path: "**", component: PageNotFoundComponent}
 
