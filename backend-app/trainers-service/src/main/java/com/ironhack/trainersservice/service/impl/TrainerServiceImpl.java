@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +26,14 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerDTO addTrainer(TrainerDTO trainerDTO) {
         Optional<Trainer> optionalTrainer = trainerRepository.findById(trainerDTO.getName());
         if (optionalTrainer.isEmpty()) {
+            if(trainerDTO.getHobby() == null){
+                trainerDTO.setHobby(Hobby.CUSTOM.toString());
+                Trainer trainer = new Trainer(trainerDTO.getName(), trainerDTO.getAge(), Hobby.valueOf(trainerDTO.getHobby().toUpperCase()), trainerDTO.getPicture(), new Date());
+                trainerRepository.save(trainer);
+            } else {
             Trainer trainer = new Trainer(trainerDTO.getName(), trainerDTO.getAge(), Hobby.valueOf(trainerDTO.getHobby().toUpperCase()), trainerDTO.getPicture(), new Date());
             trainerRepository.save(trainer);
+            }
             return trainerDTO;
         } throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is already a trainer with that name");
     }
@@ -36,7 +43,7 @@ public class TrainerServiceImpl implements TrainerService {
     public List<TrainerDTO> showTrainers() {
         List<Trainer> trainerList = trainerRepository.findAll();
         if (trainerList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are no trainers in the application at the moment");
+            return new ArrayList<>();
         }
 
 
