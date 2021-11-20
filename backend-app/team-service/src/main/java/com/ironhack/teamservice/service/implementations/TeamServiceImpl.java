@@ -86,7 +86,7 @@ public class TeamServiceImpl implements TeamService {
 
         Optional<TrainerEntity> optionalTrainer = trainerRepository.findById(name);
         if (!optionalTrainer.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Trainer does not exits");
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Trainer does not exist");
         }
 
         PokemonEntity pokemonEntity = new PokemonEntity();
