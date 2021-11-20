@@ -2,14 +2,24 @@
 
 > Full stack app made with Angular & Boostrap and Spring Boot & MySQL
 
+![demo](https://github.com/gemasegarra/pokemon-devs-and-dragons2/blob/development/images/demo.gif)
+
 > "For this project, we will make a Pokemon app! in this app, we will have 3 sections, **Pokedex**, **Teams** and **Trainers**. In Pokedex, we will be presented with a paginated list of all pokemon names, and when clicking a name a detailed view will be shown with an image, stats, and a Pokedex entry from the selected pokemon, it will be a good source of knowledge if you aren’t familiar with the pokemon names. In Trainers, we will be able to create and delete pokemon trainers with name, age, hobby and photo. In Teams, we will be able to select a trainer and see their pokemon team and add/remove pokemon to that team."
 
-## Features: 
+## Main features: 
 
-- Welcome page
-- Pokedex page
-- Trainers page
-- Teams page
+- **Welcome page**
+![welcome](https://github.com/gemasegarra/pokemon-devs-and-dragons2/blob/development/images/welcomepage.png)
+
+- **Pokedex page**: using the [PokéAPI](https://pokeapi.co/) it shows a paginated list of pokemon. When clicking on a pokemon it renders a detailed card
+![pokedex](https://github.com/gemasegarra/pokemon-devs-and-dragons2/blob/development/images/pokedex.png)
+
+- **Trainers page**: form to add new trainers and trainers list
+![trainers](https://github.com/gemasegarra/pokemon-devs-and-dragons2/blob/development/images/trainers.png) 
+
+- **Teams page**: it lets the user add up to 6 pokemon to a trainer's team
+![teams](https://github.com/gemasegarra/pokemon-devs-and-dragons2/blob/development/images/teams.png)
+![teams2](https://github.com/gemasegarra/pokemon-devs-and-dragons2/blob/development/images/teams2.png)
 
 ## Project setup: 
 
@@ -29,6 +39,7 @@ We decided to split the backend app into the following microservices:
 - Edge service: runs on port:8080
 - Team service: runs on port:8081
 - Trainer service: runs on port:8082
+![services](https://github.com/gemasegarra/pokemon-devs-and-dragons2/blob/development/images/services.png)
 
 
 **Prerrequisites:**
@@ -53,7 +64,7 @@ Don't forget to setup your own SQL server and seed the database with this [SQL s
 | Trainers    |  DELETE  | ```/trainers/{id}```  | removes a specific trainer from the db (id is the name of the trainer)  | 
 | Teams    |  GET  | ```/pokemons/{name}```  | shows list of a trainer's team of pokemon  | 
 | Teams    |  POST  | ```/pokemons/{name}```  | adds pokemon to a trainer's team  | 
-| Teams    |  DELETE  | ```/pokemons/{id}```  | removes pokemon   | 
+| Teams    |  DELETE  | ```/pokemons/{id}```  | removes pokemon from a trainer's team | 
 
 
 ## Requirements: 
@@ -76,5 +87,5 @@ Don't forget to setup your own SQL server and seed the database with this [SQL s
 - [Pilar María Carranza](https://github.com/pilicarranza)
 - [Sergio Mateos](https://github.com/SergioMateosSanz)
 - [José Antonio Peño](https://github.com/josepebel)
-[Sandra del Pozo](https://github.com/Pitsbows)
+- [Sandra del Pozo](https://github.com/Pitsbows)
 - [Gema Segarra](https://github.com/gemasegarra)
