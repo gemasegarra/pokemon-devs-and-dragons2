@@ -42,8 +42,9 @@ h6{
 .pokemon-detail {
   display: grid;
   grid-gap: 16px;
-  padding: 20px;
+  padding: 0px;;
   grid-template-rows: repeat(minmax(23%, 1fr));
+
  }
 
  .pokemon-detail .box{
@@ -97,11 +98,22 @@ h6{
 
  .card-title{
    margin-bottom: 12rem;
+   font-size: 1rem;
+ }
+
+ .connection{
+   font-size: 1rem;
+   font-weight: 500;
+ }
+
+ .title-search{
+   margin-bottom: 1.8rem;
  }
 
  .image-team-card:hover{
    background-color: lightyellow;
  }
+
 
 
 .pokeball-detail{

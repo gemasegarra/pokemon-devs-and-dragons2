@@ -118,7 +118,7 @@ export class TeamComponent implements OnInit {
 
   openDetails(pokemonName: string, index: number){
     this.indexDetails = index;
-    if(this.detailsPokemonOpen === true && index === index){
+    if(this.detailsPokemonOpen === true && pokemonName === this.detailsPokemon.name){
 
       this.detailsPokemonOpen = false;
 
@@ -131,10 +131,45 @@ export class TeamComponent implements OnInit {
         console.log(this.detailsPokemon)
           })
 
+    } else if(this.detailsPokemonOpen === true && pokemonName !== this.detailsPokemon.name){
+      this.PokemonService.getPokemonDetails(pokemonName).subscribe((response: any)=>{
+
+        this.detailsPokemon = response
+        console.log(this.detailsPokemon)
+          })
     }
   }
 
   addPokemonCheck():void{
+
+    if(this.trainerInput == ""){
+      this.alertTrainer = true;
+    }
+
+    if(this.selectedPokemon === undefined){
+      this.alertPokemon = true;
+    } else{
+      this.alertPokemon = false;
+    }
+
+    console.log(this.selectedPokemon)
+
+
+    // if(this.trainerInput == ""){
+    //   this.alertTrainer = true;
+    // } else {
+    //   this.alertTrainer = false;
+    // }
+
+    // console.log(this.selectedPokemon == undefined)
+
+
+    // if(this.selectedPokemon == undefined){
+    //   this.alertPokemon = true;
+    // } else {
+    //   this.alertPokemon = false;
+    // }
+
 
 
     console.log(this.teamPokemon)
@@ -142,18 +177,20 @@ export class TeamComponent implements OnInit {
 
       if(this.teamPokemon[index].name !== "-"){
         this.teamCompleted = true;
+        this.pokemonAdded = false;
       }else{
         this.teamCompleted = false
       }
 
     }
     console.log(this.teamPokemon)
-    if(this.teamCompleted === false){
+    if(this.teamCompleted === false && this.selectedPokemon !== undefined && this.trainerInput !== ""){
       this.addPokemon();
+      this.pokemonAdded = true;
     }
 
     console.log(this.teamCompleted)
-    this.pokemonAdded = true;
+
 
   }
 
@@ -164,18 +201,7 @@ export class TeamComponent implements OnInit {
     console.log(this.selectedPokemon)
     console.log(this.trainerInput)
 
-    if(this.trainerInput == ""){
-      this.alertTrainer = true;
-    } else {
-      this.alertTrainer = false;
-    }
 
-    console.log(this.selectedPokemon.types[0].type.name)
-    if(this.selectedPokemon == undefined){
-      this.alertPokemon = true;
-    } else {
-      this.alertPokemon = false;
-    }
 
 
 
@@ -188,14 +214,33 @@ export class TeamComponent implements OnInit {
     //   this.typeListCheck.push(this.selectedPokemon.types[1].type.name)
     // }
 
-    this.pokemonToAdd = {
-      name: this.selectedPokemon.name,
-      imageUrl: this.selectedPokemon.sprites.front_default,
-      typeList: [this.selectedPokemon.types[0].type.name],
-      statsList: [{ name: this.selectedPokemon.stats[0].stat.name, value:  this.selectedPokemon.stats[0].base_stat}, { name: this.selectedPokemon.stats[1].stat.name, value:  this.selectedPokemon.stats[1].base_stat}]
-    }
+    if(this.selectedPokemon !== undefined){
 
-    console.log(this.pokemonToAdd)
+      if(this.selectedPokemon.types.length === 1){
+        this.pokemonToAdd = {
+          name: this.selectedPokemon.name,
+          imageUrl: this.selectedPokemon.sprites.front_default,
+          typeList: [this.selectedPokemon.types[0].type.name],
+          statsList: [{ name: this.selectedPokemon.stats[0].stat.name, value:  this.selectedPokemon.stats[0].base_stat}, { name: this.selectedPokemon.stats[1].stat.name, value:  this.selectedPokemon.stats[1].base_stat}]
+        }
+
+      }
+
+      if(this.selectedPokemon.types.length !== 1){
+        this.pokemonToAdd = {
+          name: this.selectedPokemon.name,
+          imageUrl: this.selectedPokemon.sprites.front_default,
+          typeList: [this.selectedPokemon.types[0].type.name, this.selectedPokemon.types[1].type.name],
+          statsList: [{ name: this.selectedPokemon.stats[0].stat.name, value:  this.selectedPokemon.stats[0].base_stat}, { name: this.selectedPokemon.stats[1].stat.name, value:  this.selectedPokemon.stats[1].base_stat}]
+        }
+
+      }
+
+
+
+
+
+    console.log(this.pokemonToAdd.typeList)
 
 
     this.PokemonService.addPokemon(this.trainerInput, this.pokemonToAdd).subscribe((responsePost: any)=>{
@@ -227,7 +272,17 @@ export class TeamComponent implements OnInit {
   }
 
 
+  }
+
+
   selectTrainer(): void{
+
+    this.alertTrainer = false;
+    // this.alertPokemon = false;
+    this.teamCompleted = false;
+    this.pokemonAdded = false;
+
+
     console.log(this.trainerInput)
 
     this.teamPokemon = [{name: "-",
@@ -245,14 +300,17 @@ export class TeamComponent implements OnInit {
         this.pictureSelected = this.trainerList[index].picture
       }
     }
-    this.detailsPokemonOpen = false
+    console.log(this.teamCompleted)
 
+    this.detailsPokemonOpen = false
 
   }
 
   changeColorOne(){
 
     this.stateZeroOne = !this.stateZeroOne;
+
+
   }
 
 
@@ -285,6 +343,8 @@ export class TeamComponent implements OnInit {
       this.selectedPokemon = response
       console.log(this.selectedPokemon)
         })
+
+    this.alertPokemon = false;
   }
 
 
@@ -300,7 +360,7 @@ export class TeamComponent implements OnInit {
     this.allPokemons = []
 
     if(this.searcherInput === ""){
-      this.pokemonsMatch = [];
+      this.pokemonsMatch = []
       this.selectedPokemon = "";
     }
 
@@ -311,6 +371,10 @@ export class TeamComponent implements OnInit {
         console.log(this.selectedPokemon)
           })
 
+    }
+
+    if(this.selectedPokemon !== undefined){
+      this.alertPokemon = false;
     }
 
 
@@ -392,4 +456,4 @@ export class TeamComponent implements OnInit {
   }
 
 
-}
+  }
