@@ -45,44 +45,12 @@
 </div>
 <div class="container mt-5">
 <div class="row">
-  <div #searchengine class="col-12 col-sm-12 col-md-4 col-lg-4 ">
+  <div class="col-12 col-sm-12 col-md-4 col-lg-4 ">
     <h2 class="text-center title-search">Use the search engine</h2>
     <input class="form-control" [(ngModel)]="searcherInput" (keyup)="searcher()" (keyup.enter)="addPokemonCheck()">
     <h2 class="text-center mt-2">Pokemon selected</h2>
-    <div class="pokemon-detail d-flex justify-content-center" *ngIf="!selectedPokemon">
-      <div class="box">
-          <img src="https://m.media-amazon.com/images/I/41iijFSq7VL._AC_SX466_.jpg" alt="Pokemon">
-          <h3>??? ???</h3>
-          <p>
-            <b>Type:</b> ???
-        </p>
-        <p>
-            <b>Height:</b> ???
-        </p>
-        <p>
-          <b>Weight:</b> ???
-      </p>
-        <p>
-            <b>Health:</b> ???
-        </p>
-        <p>
-            <b>Attack:</b> ???
-        </p>
-        <p>
-          <b>Defense:</b> ???
-      </p>
-        <p>
-            <b>Special attack:</b> ???
-        </p>
-        <p>
-          <b>Special defense:</b> ???
-      </p>
-        <p>
-          <b>Speed:</b> ???
-      </p>
-      </div>
-  </div>
-    <app-card-details class="col-12 col-sm-12 col-md-12 col-lg-12" *ngIf="selectedPokemon" [pokemon]="selectedPokemon"></app-card-details>
+
+
     <div class="button-div d-flex justify-content-center mt-4 mb-2">
     <button type="submit" (click)="addPokemonCheck()" class="btn btn-dark ">Add pokemon</button>
 
@@ -99,6 +67,40 @@
   <div *ngIf="pokemonAdded" class="alert alert-success text-center" role="alert">
     Pokemon added to {{trainerInput}}'s team
   </div>
+  <div class="pokemon-detail d-flex justify-content-center" *ngIf="!selectedPokemon">
+    <div class="box">
+        <img src="https://m.media-amazon.com/images/I/41iijFSq7VL._AC_SX466_.jpg" alt="Pokemon">
+        <h3>??? ???</h3>
+        <p>
+          <b>Type:</b> ???
+      </p>
+      <p>
+          <b>Height:</b> ???
+      </p>
+      <p>
+        <b>Weight:</b> ???
+    </p>
+      <p>
+          <b>Health:</b> ???
+      </p>
+      <p>
+          <b>Attack:</b> ???
+      </p>
+      <p>
+        <b>Defense:</b> ???
+    </p>
+      <p>
+          <b>Special attack:</b> ???
+      </p>
+      <p>
+        <b>Special defense:</b> ???
+    </p>
+      <p>
+        <b>Speed:</b> ???
+    </p>
+    </div>
+</div>
+<app-card-details class="col-12 col-sm-12 col-md-12 col-lg-12" *ngIf="selectedPokemon" [pokemon]="selectedPokemon"></app-card-details>
 
 
   </div>

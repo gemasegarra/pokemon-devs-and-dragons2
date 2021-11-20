@@ -165,7 +165,11 @@ export class TeamComponent implements OnInit {
     if(this.teamCompleted === false && this.selectedPokemon !== undefined && this.trainerInput !== ""){
       this.addPokemon();
       this.pokemonAdded = true;
+      this.searcherInput = "";
+      this.selectedPokemon = undefined
     }
+
+
 
 
 
@@ -336,6 +340,8 @@ export class TeamComponent implements OnInit {
     if(this.selectedPokemon !== undefined){
       this.alertPokemon = false;
     }
+
+    this.pokemonAdded = false;
 
 
   }

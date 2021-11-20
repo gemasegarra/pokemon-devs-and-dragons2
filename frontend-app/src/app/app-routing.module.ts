@@ -3,7 +3,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { TrainersComponent } from './components/trainers/trainers.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PokemonListComponent } from './components/pokemon-list/pokemon-list.component';
 import { PokedexComponent } from './pokedex/pokedex.component';
 import { WellcomePageComponent } from './components/wellcome-page/wellcome-page.component';
 
