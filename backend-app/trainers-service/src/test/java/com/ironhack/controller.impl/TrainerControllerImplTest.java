@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 class TrainerControllerImplTest {
-
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -48,6 +48,10 @@ class TrainerControllerImplTest {
         trainer.setAge((byte) 33);
         trainer.setHobby(Hobby.BLACKBELT);
         trainer.setPicture("");
+        trainer.setCreationDate(new Date());
+        trainer.setUserCreation("SpringBoot Test");
+        trainer.setModificationDate(new Date(0));
+        trainer.setUserModification("");
         trainerRepository.save(trainer);
 
         trainer2 = new Trainer();
@@ -66,13 +70,11 @@ class TrainerControllerImplTest {
     @Test
     void addTrainer_BodyKO() throws Exception {
 
-
         TrainerDTO trainerDTO = new TrainerDTO();
         trainerDTO.setHobby("Blackbelt");
         trainerDTO.setPicture("");
 
         String body = objectMapper.writeValueAsString(trainerDTO);
-
 
         MvcResult mvcResult = mockMvc.perform(post("/trainers")
                         .content(body)
@@ -81,12 +83,10 @@ class TrainerControllerImplTest {
                 )
               .andExpect(status().isBadRequest())
                 .andReturn();
-
-
     }
+
     @Test
     void addTrainer_BodyOK() throws Exception {
-
 
         TrainerDTO trainerDTO = new TrainerDTO();
         trainerDTO.setName("Prueba3");
@@ -96,6 +96,44 @@ class TrainerControllerImplTest {
 
         String body = objectMapper.writeValueAsString(trainerDTO);
 
+        MvcResult mvcResult = mockMvc.perform(post("/trainers")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                )
+                .andExpect(status().isCreated())
+                .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8).contains("Prueba3"));
+    }
+
+    @Test
+    void addTrainer_BadRequest_TrainerExistsInDatabase() throws Exception {
+
+        TrainerDTO trainerDTO = new TrainerDTO();
+        trainerDTO.setName("Prueba");
+        trainerDTO.setAge((byte) 33);
+        trainerDTO.setHobby("Blackbelt");
+        trainerDTO.setPicture("");
+
+        String body = objectMapper.writeValueAsString(trainerDTO);
+        mockMvc.perform(post("/trainers")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                )
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void addTrainer_Created_TrainerDTOWithoutHobby() throws Exception {
+
+        TrainerDTO trainerDTO = new TrainerDTO();
+        trainerDTO.setName("Prueba3");
+        trainerDTO.setAge((byte) 33);
+        trainerDTO.setHobby(null);
+        trainerDTO.setPicture("");
+
+        String body = objectMapper.writeValueAsString(trainerDTO);
 
         MvcResult mvcResult = mockMvc.perform(post("/trainers")
                         .content(body)
@@ -105,19 +143,21 @@ class TrainerControllerImplTest {
                 .andExpect(status().isCreated())
                 .andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8).contains("Prueba3"));
-
+        assertTrue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8).contains("CUSTOM"));
+        assertEquals(trainerDTO.getName(), trainerRepository.findById("Prueba3").get().getName());
     }
 
     @Test
-    void showTrainers_NoTrainerInDataBase() throws Exception {
+    void showTrainers_ReturnEmptyList_NoTrainerInDataBase() throws Exception {
 
         trainerRepository.deleteAll();
         MvcResult mvcResult = mockMvc.perform(get("/trainers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                 )
-                .andExpect(status().isNotFound())
+                .andExpect(status().isOk())
                 .andReturn();
+        assertTrue(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8).contains("[]"));
     }
 
     @Test

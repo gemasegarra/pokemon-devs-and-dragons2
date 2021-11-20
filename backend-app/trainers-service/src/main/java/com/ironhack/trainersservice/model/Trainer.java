@@ -25,13 +25,6 @@ public class Trainer {
     public Trainer() {
     }
 
-    public Trainer(String name, byte age, Hobby hobby, String picture) {
-        this.name = name;
-        this.age = age;
-        this.hobby = hobby;
-        this.picture = picture;
-    }
-
     public Trainer(String name, byte age, Hobby hobby, String picture, Date creationDate) {
         this.name = name;
         this.age = age;
@@ -72,32 +65,16 @@ public class Trainer {
         this.picture = picture;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public Date getModificationDate() {
-        return modificationDate;
     }
 
     public void setModificationDate(Date modificationDate) {
         this.modificationDate = modificationDate;
     }
 
-    public String getUserCreation() {
-        return userCreation;
-    }
-
     public void setUserCreation(String userCreation) {
         this.userCreation = userCreation;
-    }
-
-    public String getUserModification() {
-        return userModification;
     }
 
     public void setUserModification(String userModification) {

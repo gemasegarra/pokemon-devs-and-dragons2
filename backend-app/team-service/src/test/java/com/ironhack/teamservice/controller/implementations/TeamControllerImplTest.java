@@ -234,6 +234,66 @@ class TeamControllerImplTest {
     }
 
     @Test
+    void store_UnprocessedEntity_TrainerWithSixPokemon() throws Exception {
+
+        pokemon = new PokemonEntity();
+        pokemon.setName("bulbasaur");
+        pokemon.setImageUrl("");
+        pokemon.setTrainer(trainer);
+        pokemon.setCreationDate(LocalDate.now());
+        pokemon.setUserCreation("Testing");
+        pokemonRepository.save(pokemon);
+
+        pokemon = new PokemonEntity();
+        pokemon.setName("bulbasaur");
+        pokemon.setImageUrl("");
+        pokemon.setTrainer(trainer);
+        pokemon.setCreationDate(LocalDate.now());
+        pokemon.setUserCreation("Testing");
+        pokemonRepository.save(pokemon);
+
+        pokemon = new PokemonEntity();
+        pokemon.setName("bulbasaur");
+        pokemon.setImageUrl("");
+        pokemon.setTrainer(trainer);
+        pokemon.setCreationDate(LocalDate.now());
+        pokemon.setUserCreation("Testing");
+        pokemonRepository.save(pokemon);
+
+        pokemon = new PokemonEntity();
+        pokemon.setName("bulbasaur");
+        pokemon.setImageUrl("");
+        pokemon.setTrainer(trainer);
+        pokemon.setCreationDate(LocalDate.now());
+        pokemon.setUserCreation("Testing");
+        pokemonRepository.save(pokemon);
+
+        pokemon = new PokemonEntity();
+        pokemon.setName("bulbasaur");
+        pokemon.setImageUrl("");
+        pokemon.setTrainer(trainer);
+        pokemon.setCreationDate(LocalDate.now());
+        pokemon.setUserCreation("Testing");
+        pokemonRepository.save(pokemon);
+
+        pokemonDTO = new PokemonDTO();
+        pokemonDTO.setName("test");
+        pokemonDTO.setImageUrl("test");
+        pokemonDTO.setTypeList(List.of("grass"));
+        PokemonStatsDTO pokemonStatsDTO = new PokemonStatsDTO();
+        pokemonStatsDTO.setName("hp");
+        pokemonStatsDTO.setValue((short) 33);
+        pokemonDTO.setStatsList(List.of(pokemonStatsDTO));
+        String body = objectMapper.writeValueAsString(pokemonDTO);
+        mockMvc.perform(post("/pokemons/" +trainer.getName())
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                )
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     void delete_NotFound_PokemonNotExitsInDatabase() throws Exception {
 
         mockMvc.perform(delete("/pokemons/0")
