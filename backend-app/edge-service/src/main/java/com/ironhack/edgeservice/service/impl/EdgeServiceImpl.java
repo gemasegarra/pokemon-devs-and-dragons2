@@ -45,5 +45,12 @@ public class EdgeServiceImpl implements EdgeService {
         return trainersClient.getTrainer(name);
     }
 
-    public void deleteTrainer(String name){ trainersClient.deleteTrainer(name);}
+    public void deleteTrainer(String name){
+        List<PokemonDTO> pokemons = teamClient.getAll(name);
+        if(!pokemons.isEmpty()) {
+            for (PokemonDTO pokemonToDelete : pokemons) {
+                teamClient.delete(pokemonToDelete.getId());
+            }
+        }
+        trainersClient.deleteTrainer(name);}
 }
