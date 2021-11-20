@@ -245,6 +245,7 @@ export class TeamComponent implements OnInit {
         this.pictureSelected = this.trainerList[index].picture
       }
     }
+    this.detailsPokemonOpen = false
 
 
   }
@@ -299,7 +300,8 @@ export class TeamComponent implements OnInit {
     this.allPokemons = []
 
     if(this.searcherInput === ""){
-      this.pokemonsMatch = []
+      this.pokemonsMatch = [];
+      this.selectedPokemon = "";
     }
 
     if(this.searcherInput.toLowerCase() === this.pokemonsMatch[0]){
