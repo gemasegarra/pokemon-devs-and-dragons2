@@ -89,6 +89,10 @@ public class TeamServiceImpl implements TeamService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Trainer does not exist");
         }
 
+        if (optionalTrainer.get().getPokemonList().size() == 6) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "No more Pokemons can be added");
+        }
+
         PokemonEntity pokemonEntity = new PokemonEntity();
         PokemonDTO outputPokemonDTO = new PokemonDTO();
 
