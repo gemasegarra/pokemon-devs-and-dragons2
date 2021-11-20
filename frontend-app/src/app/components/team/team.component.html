@@ -104,14 +104,28 @@
   </div>
 
   <div class="col-12 col-sm-12 col-md-8 col-lg-8 ">
+    <div class="row"></div>
     <h2 class="text-center mb-4">Catch your pokemon</h2>
-    <div class="d-flex justify-content-center">
-    <div *ngIf="pokemonsMatch.length === 0"  class="spinner-grow text-success" role="status">
 
-    </div>
+    <div class="d-flex justify-content-center">
+      <div *ngIf="pokemonsMatch.length === 0 && searcherInput === ''"  class="spinner-grow text-dark mb-3" role="status">
+      </div>
+      <div *ngIf="pokemonsMatch.length !== 0"  class="spinner-grow text-success mb-3" role="status">
+      </div>
+      <div *ngIf="pokemonsMatch.length === 0 && searcherInput !== ''"  class="spinner-grow text-danger mb-3" role="status">
+      </div>
   </div>
-    <div  *ngIf="pokemonsMatch.length === 0" class="d-flex justify-content-center"><p class="connection">Success connection with Pokedex</p>
+  <div  *ngIf="pokemonsMatch.length === 0 && searcherInput !== ''" class="d-flex justify-content-center"><p class="connection alert alert-danger">No pokemon found with this name</p>
   </div>
+    <div  *ngIf="pokemonsMatch.length === 0" class="d-flex justify-content-center"><p class="connection alert alert-dark">Use the search engine to connect with Pokedex</p>
+  </div>
+
+    <div  *ngIf="pokemonsMatch.length !== 0" class="d-flex justify-content-center"><p class="connection alert alert-success">Success connection with Pokedex</p>
+  </div>
+
+  <div  *ngIf="pokemonsMatch.length === 0" class="d-flex justify-content-center"><img *ngIf="pokemonsMatch.length === 0" src="../../../assets/img/pokédex.png">
+  </div>
+
     <div class="row">
       <div (click)="visualizePokemon(pokemon)" class="col-6 col-sm-6 col-md-3 col-lg-3 p-1" *ngFor="let pokemon of pokemonsMatch">
         <div class="card search-card" >

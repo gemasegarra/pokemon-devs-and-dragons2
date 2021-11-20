@@ -70,11 +70,7 @@ export class TeamComponent implements OnInit {
     private PokemonService: PokemonService, private trainerService: TrainerService
   ) {
 
-    this.trainerList = [new Trainer("Rubén", 18, "Champion","https://cdn2.bulbagarden.net/upload/thumb/8/83/FireRed_LeafGreen_Red.png/278px-FireRed_LeafGreen_Red.png"),
-    new Trainer("Rubén", 18, "Champion","https://cdn2.bulbagarden.net/upload/thumb/8/83/FireRed_LeafGreen_Red.png/278px-FireRed_LeafGreen_Red.png"),
-    new Trainer("Rubén", 18, "Champion","https://cdn2.bulbagarden.net/upload/thumb/8/83/FireRed_LeafGreen_Red.png/278px-FireRed_LeafGreen_Red.png"),
-    new Trainer("Rubén", 18, "Champion","https://cdn2.bulbagarden.net/upload/thumb/8/83/FireRed_LeafGreen_Red.png/278px-FireRed_LeafGreen_Red.png"),
-    new Trainer("Rubén", 18, "Champion","https://cdn2.bulbagarden.net/upload/thumb/8/83/FireRed_LeafGreen_Red.png/278px-FireRed_LeafGreen_Red.png")]
+    this.trainerList = []
 
     this.emptyObject = {
       name: "-",
