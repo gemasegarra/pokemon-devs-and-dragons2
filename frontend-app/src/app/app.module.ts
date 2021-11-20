@@ -16,6 +16,7 @@ import { TeamComponent } from './components/team/team.component';
 import { CardDetailsComponent } from './components/card-details/card-details.component';
 import { WellcomePageComponent } from './components/wellcome-page/wellcome-page.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +29,8 @@ import { WellcomePageComponent } from './components/wellcome-page/wellcome-page.
     PokedexComponent,
     TeamComponent,
     CardDetailsComponent,
-    WellcomePageComponent
+    WellcomePageComponent,
+
   ],
   imports: [
     BrowserModule,

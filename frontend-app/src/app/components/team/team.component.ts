@@ -1,3 +1,4 @@
+import { TrainerService } from 'src/app/services/trainer.service';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Trainer } from './../../models/trainer.model';
@@ -41,10 +42,32 @@ export class TeamComponent implements OnInit {
 
   stateZeroOne: boolean = true;
 
+  isTrainerListEmpty!: boolean;
+
+  emptyObject!: any;
+
+  emptyTeamPokemon: any[] = []
+
+  indexDetails!: number
+
+  detailsPokemon: any;
+
+  alertTrainer: boolean;
+
+  alertPokemon: boolean;
+
+  pokemonToAdd: any;
+
+  typeListCheck!: any[];
+
+  teamCompleted: boolean = false;
+
+  pokemonAdded: boolean = false;
+
 
 
   constructor(
-    private PokemonService: PokemonService
+    private PokemonService: PokemonService, private trainerService: TrainerService
   ) {
 
     this.trainerList = [new Trainer("Rubén", 18, "Champion","https://cdn2.bulbagarden.net/upload/thumb/8/83/FireRed_LeafGreen_Red.png/278px-FireRed_LeafGreen_Red.png"),
@@ -53,35 +76,177 @@ export class TeamComponent implements OnInit {
     new Trainer("Rubén", 18, "Champion","https://cdn2.bulbagarden.net/upload/thumb/8/83/FireRed_LeafGreen_Red.png/278px-FireRed_LeafGreen_Red.png"),
     new Trainer("Rubén", 18, "Champion","https://cdn2.bulbagarden.net/upload/thumb/8/83/FireRed_LeafGreen_Red.png/278px-FireRed_LeafGreen_Red.png")]
 
-    this.teamPokemon = ['charizard', "pikachu", "bulbasaur", "moltres"]
+    this.emptyObject = {
+      name: "-",
+      imageUrl: "../../../assets/img/Level_Ball_battle_V.png"
+    }
+
+    this.emptyTeamPokemon = [{name: "-",
+    imageUrl: "../../../assets/img/Level_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Luxury_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Quick_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Safari_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Ultra_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Master_Ball_battle_V.png"}]
+
+    this.pictureSelected = "../../../assets/img/silueta-trainer.png"
 
 
-   this.pictureSelected = "../../../assets/img/silueta-trainer.png"
+    this.alertTrainer = false;
+
+    this.alertPokemon = false;
   }
 
 
   ngOnInit(): void {
+    this.getAllTrainers();
     this.getPokemons();
     this.getAllPokemons();
     this.detailsPokemonOpen = false
+    this.teamPokemon = [{name: "-",
+    imageUrl: "../../../assets/img/Level_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Luxury_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Quick_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Safari_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Ultra_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Master_Ball_battle_V.png"}]
+
+    this.alertTrainer = false;
+    this.alertPokemon = false;
+
   }
 
-  openDetails(){
-    this.detailsPokemonOpen = !this.detailsPokemonOpen
+  openDetails(pokemonName: string, index: number){
+    this.indexDetails = index;
+    if(this.detailsPokemonOpen === true && index === index){
+
+      this.detailsPokemonOpen = false;
+
+    } else if(this.detailsPokemonOpen === false ){
+
+      this.detailsPokemonOpen = true
+      this.PokemonService.getPokemonDetails(pokemonName).subscribe((response: any)=>{
+
+        this.detailsPokemon = response
+        console.log(this.detailsPokemon)
+          })
+
+    }
+  }
+
+  addPokemonCheck():void{
+
+
+    console.log(this.teamPokemon)
+    for (let index = 0; index < this.teamPokemon.length; index++) {
+
+      if(this.teamPokemon[index].name !== "-"){
+        this.teamCompleted = true;
+      }else{
+        this.teamCompleted = false
+      }
+
+    }
+    console.log(this.teamPokemon)
+    if(this.teamCompleted === false){
+      this.addPokemon();
+    }
+
+    console.log(this.teamCompleted)
+    this.pokemonAdded = true;
 
   }
 
   addPokemon(): void{
 
 
+    console.log(this.teamPokemon)
     console.log(this.selectedPokemon)
+    console.log(this.trainerInput)
 
+    if(this.trainerInput == ""){
+      this.alertTrainer = true;
+    } else {
+      this.alertTrainer = false;
+    }
+
+    console.log(this.selectedPokemon.types[0].type.name)
+    if(this.selectedPokemon == undefined){
+      this.alertPokemon = true;
+    } else {
+      this.alertPokemon = false;
+    }
+
+
+
+    // if(this.selectedPokemon.types.length === 1){
+    //   console.log(this.selectedPokemon.types[0].type.name)
+    //   this.typeListCheck.push(this.selectedPokemon.types[0].type.name)
+
+    // } else {
+    //   this.typeListCheck.push(this.selectedPokemon.types[0].type.name)
+    //   this.typeListCheck.push(this.selectedPokemon.types[1].type.name)
+    // }
+
+    this.pokemonToAdd = {
+      name: this.selectedPokemon.name,
+      imageUrl: this.selectedPokemon.sprites.front_default,
+      typeList: [this.selectedPokemon.types[0].type.name],
+      statsList: [{ name: this.selectedPokemon.stats[0].stat.name, value:  this.selectedPokemon.stats[0].base_stat}, { name: this.selectedPokemon.stats[1].stat.name, value:  this.selectedPokemon.stats[1].base_stat}]
+    }
+
+    console.log(this.pokemonToAdd)
+
+
+    this.PokemonService.addPokemon(this.trainerInput, this.pokemonToAdd).subscribe((responsePost: any)=>{
+
+      console.log(responsePost)
+      this.PokemonService.getTeam(this.trainerInput).subscribe((response: any)=>{
+        console.log(response)
+
+        this.teamPokemon = [{name: "-",
+    imageUrl: "../../../assets/img/Level_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Luxury_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Quick_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Safari_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Ultra_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Master_Ball_battle_V.png"}]
+
+
+        for (let index = 0; index < response.length; index++) {
+          this.teamPokemon.splice(index, 1, response[index]);
+        }
+
+
+        this.teamPokemon.splice((response.length + 1) , responsePost)
+        console.log(this.teamPokemon)
+      })
+
+    })
 
   }
 
+
   selectTrainer(): void{
-    this.pictureSelected = this.trainerInput
-    console.log(this.pictureSelected)
+    console.log(this.trainerInput)
+
+    this.teamPokemon = [{name: "-",
+    imageUrl: "../../../assets/img/Level_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Luxury_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Quick_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Safari_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Ultra_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Master_Ball_battle_V.png"}]
+
+    this.getTeam(this.trainerInput)
+
+    for (let index = 0; index < this.trainerList.length; index++) {
+      if(this.trainerInput === this.trainerList[index].name){
+        this.pictureSelected = this.trainerList[index].picture
+      }
+    }
+
+
   }
 
   changeColorOne(){
@@ -110,22 +275,15 @@ export class TeamComponent implements OnInit {
 
     console.log(pokemon)
 
-
-
     this.pokemonInputValue = pokemon["name"]
 
-
-
+    console.log(this.pokemonInputValue)
 
     this.PokemonService.getPokemonDetails(pokemon).subscribe((response: any)=>{
 
       this.selectedPokemon = response
       console.log(this.selectedPokemon)
         })
-
-
-
-
   }
 
 
@@ -136,28 +294,9 @@ export class TeamComponent implements OnInit {
 
     this.getAllPokemons();
 
-
-
     this.pokemonsMatch = this.allPokemons.filter(pokemon => pokemon.includes(this.searcherInput.toLowerCase()))
 
     this.allPokemons = []
-
-
-
-    // this.pokemonsMatch.forEach(pokemon => {
-    //   this.PokemonService.getPokemonDetails(pokemon).subscribe((response: any)=>{
-    //     this.searchPokemons.push(response)
-    //     this.searchPokemons.sort(function(a, b) {
-    //       return a.id - b.id;
-    //     })
-    //   })
-    // });
-
-
-
-    // console.log(this.pokemons)
-
-    // console.log(this.searchPokemons)
 
     if(this.searcherInput === ""){
       this.pokemonsMatch = []
@@ -184,9 +323,69 @@ export class TeamComponent implements OnInit {
 
       }
 
-      // console.log(this.allPokemons)
+    })
+  }
 
-      // console.log(response.results[0].name)
+  getTeam(trainer: string): void{
+    console.log(this.teamPokemon)
+    console.log(trainer)
+    this.PokemonService.getTeam(trainer).subscribe((response: any)=>{
+      console.log(response)
+
+      for (let index = 0; index < response.length; index++) {
+        this.teamPokemon.splice(index, 1, response[index]);
+      }
+      console.log(this.teamPokemon)
+    })
+
+
+  }
+
+
+  deletePokemon(id: number, index: number): void{
+    console.log(this.teamPokemon)
+    console.log(this.emptyTeamPokemon)
+    console.log(id)
+    console.log(index)
+
+    this.PokemonService.deletePokemon(id).subscribe((deleteResponse: any)=>{
+      this.PokemonService.getTeam(this.trainerInput).subscribe((response: any)=>{
+        console.log(response)
+
+        this.teamPokemon = [{name: "-",
+    imageUrl: "../../../assets/img/Level_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Luxury_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Quick_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Safari_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Ultra_Ball_battle_V.png"}, {name: "-",
+    imageUrl: "../../../assets/img/Master_Ball_battle_V.png"}]
+
+
+        for (let index = 0; index < response.length; index++) {
+          this.teamPokemon.splice(index, 1, response[index]);
+        }
+        console.log(this.teamPokemon)
+      })
+
+    })
+
+  }
+
+
+  getAllTrainers(){
+    this.trainerService.getTrainers().subscribe({
+      next: dataResult => {
+        this.trainerList = dataResult;
+        if (this.trainerList.length == 0) {
+          this.isTrainerListEmpty = true;
+        } else {
+          this.isTrainerListEmpty = false;
+        }
+      }
+      ,
+      error: error => {
+        console.error("Ther was an error!", error);
+      }
     })
   }
 

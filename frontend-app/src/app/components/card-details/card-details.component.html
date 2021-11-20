@@ -1,7 +1,7 @@
 <div class="pokemon-detail d-flex justify-content-center">
   <div class="box">
       <img [src]="pokemon.sprites.front_default" alt="Pokemon">
-      <h3>{{pokemon.id}} {{pokemon.name}}</h3>
+      <h3>#{{pokemon.id}} {{pokemon.name}}</h3>
       <p>
           <b>Type:</b> {{pokemon.types[0]?.type?.name}} {{pokemon.types[1]?.type?.name}}
       </p>

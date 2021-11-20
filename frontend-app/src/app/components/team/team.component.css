@@ -14,7 +14,7 @@
 
 
 span{
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 
 h6{
@@ -61,7 +61,9 @@ h6{
  }
 
  .image-container{
-   height: 32rem;
+    -webkit-box-shadow: inset -1px 3px 8px 5px #000000, 2px 5px 16px 0px #0B325E, -27px -26px 5px 5px rgba(0,0,0,0);
+    box-shadow: inset -1px 3px 8px 5px #000000, 2px 5px 16px 0px #0B325E, -27px -26px 5px 5px rgba(0,0,0,0);
+   height: 36rem;
 
    align-items: center;
    align-self: center;
@@ -70,6 +72,11 @@ h6{
 
    background-color: gainsboro;
  }
+
+ .transparent{
+   color:white;
+ }
+
 
 
  .image-team{
@@ -115,4 +122,16 @@ h6{
 .first-one{
   background-color: black;
   color: lightyellow;
+}
+
+.resize{
+  width: 4rem;
+  height: 4rem;
+  margin-top: 66px;
+  margin-bottom: 46px;
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+
+
 }
