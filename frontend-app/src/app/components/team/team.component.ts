@@ -128,14 +128,14 @@ export class TeamComponent implements OnInit {
       this.PokemonService.getPokemonDetails(pokemonName).subscribe((response: any)=>{
 
         this.detailsPokemon = response
-        console.log(this.detailsPokemon)
+
           })
 
     } else if(this.detailsPokemonOpen === true && pokemonName !== this.detailsPokemon.name){
       this.PokemonService.getPokemonDetails(pokemonName).subscribe((response: any)=>{
 
         this.detailsPokemon = response
-        console.log(this.detailsPokemon)
+
           })
     }
   }
@@ -152,27 +152,9 @@ export class TeamComponent implements OnInit {
       this.alertPokemon = false;
     }
 
-    console.log(this.selectedPokemon)
-
-
-    // if(this.trainerInput == ""){
-    //   this.alertTrainer = true;
-    // } else {
-    //   this.alertTrainer = false;
-    // }
-
-    // console.log(this.selectedPokemon == undefined)
-
-
-    // if(this.selectedPokemon == undefined){
-    //   this.alertPokemon = true;
-    // } else {
-    //   this.alertPokemon = false;
-    // }
 
 
 
-    console.log(this.teamPokemon)
     for (let index = 0; index < this.teamPokemon.length; index++) {
 
       if(this.teamPokemon[index].name !== "-"){
@@ -183,13 +165,13 @@ export class TeamComponent implements OnInit {
       }
 
     }
-    console.log(this.teamPokemon)
+
     if(this.teamCompleted === false && this.selectedPokemon !== undefined && this.trainerInput !== ""){
       this.addPokemon();
       this.pokemonAdded = true;
     }
 
-    console.log(this.teamCompleted)
+
 
 
   }
@@ -197,22 +179,7 @@ export class TeamComponent implements OnInit {
   addPokemon(): void{
 
 
-    console.log(this.teamPokemon)
-    console.log(this.selectedPokemon)
-    console.log(this.trainerInput)
 
-
-
-
-
-    // if(this.selectedPokemon.types.length === 1){
-    //   console.log(this.selectedPokemon.types[0].type.name)
-    //   this.typeListCheck.push(this.selectedPokemon.types[0].type.name)
-
-    // } else {
-    //   this.typeListCheck.push(this.selectedPokemon.types[0].type.name)
-    //   this.typeListCheck.push(this.selectedPokemon.types[1].type.name)
-    // }
 
     if(this.selectedPokemon !== undefined){
 
@@ -240,14 +207,14 @@ export class TeamComponent implements OnInit {
 
 
 
-    console.log(this.pokemonToAdd.typeList)
+
 
 
     this.PokemonService.addPokemon(this.trainerInput, this.pokemonToAdd).subscribe((responsePost: any)=>{
 
-      console.log(responsePost)
+
       this.PokemonService.getTeam(this.trainerInput).subscribe((response: any)=>{
-        console.log(response)
+
 
         this.teamPokemon = [{name: "-",
     imageUrl: "../../../assets/img/Level_Ball_battle_V.png"}, {name: "-",
@@ -264,7 +231,6 @@ export class TeamComponent implements OnInit {
 
 
         this.teamPokemon.splice((response.length + 1) , responsePost)
-        console.log(this.teamPokemon)
       })
 
     })
@@ -278,12 +244,11 @@ export class TeamComponent implements OnInit {
   selectTrainer(): void{
 
     this.alertTrainer = false;
-    // this.alertPokemon = false;
     this.teamCompleted = false;
     this.pokemonAdded = false;
 
 
-    console.log(this.trainerInput)
+
 
     this.teamPokemon = [{name: "-",
     imageUrl: "../../../assets/img/Level_Ball_battle_V.png"}, {name: "-",
@@ -300,7 +265,7 @@ export class TeamComponent implements OnInit {
         this.pictureSelected = this.trainerList[index].picture
       }
     }
-    console.log(this.teamCompleted)
+
 
     this.detailsPokemonOpen = false
 
@@ -332,16 +297,16 @@ export class TeamComponent implements OnInit {
 
   visualizePokemon(pokemon: any): void{
 
-    console.log(pokemon)
+
 
     this.pokemonInputValue = pokemon["name"]
 
-    console.log(this.pokemonInputValue)
+
 
     this.PokemonService.getPokemonDetails(pokemon).subscribe((response: any)=>{
 
       this.selectedPokemon = response
-      console.log(this.selectedPokemon)
+
         })
 
     this.alertPokemon = false;
@@ -351,7 +316,7 @@ export class TeamComponent implements OnInit {
   searcher(): void{
     this.searchPokemons = []
 
-    console.log(this.searcherInput)
+
 
     this.getAllPokemons();
 
@@ -368,7 +333,6 @@ export class TeamComponent implements OnInit {
       this.PokemonService.getPokemonDetails(this.pokemonsMatch[0]).subscribe((response: any)=>{
 
         this.selectedPokemon = response
-        console.log(this.selectedPokemon)
           })
 
     }
@@ -393,15 +357,13 @@ export class TeamComponent implements OnInit {
   }
 
   getTeam(trainer: string): void{
-    console.log(this.teamPokemon)
-    console.log(trainer)
+
     this.PokemonService.getTeam(trainer).subscribe((response: any)=>{
-      console.log(response)
+
 
       for (let index = 0; index < response.length; index++) {
         this.teamPokemon.splice(index, 1, response[index]);
       }
-      console.log(this.teamPokemon)
     })
 
 
@@ -409,14 +371,11 @@ export class TeamComponent implements OnInit {
 
 
   deletePokemon(id: number, index: number): void{
-    console.log(this.teamPokemon)
-    console.log(this.emptyTeamPokemon)
-    console.log(id)
-    console.log(index)
+
 
     this.PokemonService.deletePokemon(id).subscribe((deleteResponse: any)=>{
       this.PokemonService.getTeam(this.trainerInput).subscribe((response: any)=>{
-        console.log(response)
+
 
         this.teamPokemon = [{name: "-",
     imageUrl: "../../../assets/img/Level_Ball_battle_V.png"}, {name: "-",
@@ -430,7 +389,7 @@ export class TeamComponent implements OnInit {
         for (let index = 0; index < response.length; index++) {
           this.teamPokemon.splice(index, 1, response[index]);
         }
-        console.log(this.teamPokemon)
+
       })
 
     })

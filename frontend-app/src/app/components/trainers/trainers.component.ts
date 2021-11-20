@@ -64,7 +64,7 @@ export class TrainersComponent implements OnInit {
 
     let repeatName: boolean = false;
     for (let i: number = 0; i < this.trainerList.length; i++) {
-      console.log("name:" + this.trainerList[i].name);
+
       if (name === this.trainerList[i].name) {
         repeatName = true;
       }
