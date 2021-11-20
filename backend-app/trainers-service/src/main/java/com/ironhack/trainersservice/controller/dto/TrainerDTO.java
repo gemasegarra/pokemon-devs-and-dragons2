@@ -53,13 +53,4 @@ public class TrainerDTO {
         this.picture = picture;
     }
 
-    @Override
-    public String toString() {
-        return "Trainer:" +
-                "Name: " + name + '\'' +
-                "Age: " + age +
-                "Hobby: " + hobby + '\'' +
-                "Picture: " + picture + '\''
-                ;
-    }
 }
